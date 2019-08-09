@@ -32,7 +32,7 @@ steps:
   displayName: Restore
   inputs:
     command: restore
-    projects: '$(Parameters.RestoreBuildProjects)'
+    projects: '$(solution)'
     vstsFeed: '2776577c-a22b-427d-b0b5-59ad9e7bca42'
 
 - task: VSBuild@1
