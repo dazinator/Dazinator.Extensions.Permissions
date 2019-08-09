@@ -16,6 +16,10 @@ variables:
   GitVersion.SemVer: ''
 
 steps:
+- task: gittools.gitversion.gitversion-task.GitVersion@5
+  displayName: GitVersion
+  inputs:
+    preferBundledVersion: false
 
 - task: NuGetToolInstaller@1
 
