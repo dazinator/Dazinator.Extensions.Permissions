@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.89
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dazinator.Extensions.Permissions", "Dazinator.Extensions.Permissions\Dazinator.Extensions.Permissions.csproj", "{3D861699-553C-4E99-B5A9-F21A253ECC6A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dazinator.Extensions.Permissions.Entities", "Dazinator.Extensions.Permissions.Entities\Dazinator.Extensions.Permissions.Entities.csproj", "{917138CB-940A-48DF-A7A0-DE360A74E3F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dazinator.Extensions.Permissions.EFCore", "Dazinator.Extensions.Permissions.EFCore\Dazinator.Extensions.Permissions.EFCore.csproj", "{7BCA8A35-7E9F-4110-B154-07B33B7B2BBE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dazinator.Extensions.Permissions.Authorisation", "Dazinator.Extensions.Permissions.Authorisation\Dazinator.Extensions.Permissions.Authorisation.csproj", "{7589A511-9D3B-472C-8C3C-A1E17A3FAFD9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A00FC5E6-1633-4EDA-9FDB-3F7F86D3DE7A}"
+	ProjectSection(SolutionItems) = preProject
+		..\appveyor.yml = ..\appveyor.yml
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D861699-553C-4E99-B5A9-F21A253ECC6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D861699-553C-4E99-B5A9-F21A253ECC6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D861699-553C-4E99-B5A9-F21A253ECC6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D861699-553C-4E99-B5A9-F21A253ECC6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{917138CB-940A-48DF-A7A0-DE360A74E3F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{917138CB-940A-48DF-A7A0-DE360A74E3F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{917138CB-940A-48DF-A7A0-DE360A74E3F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{917138CB-940A-48DF-A7A0-DE360A74E3F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BCA8A35-7E9F-4110-B154-07B33B7B2BBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BCA8A35-7E9F-4110-B154-07B33B7B2BBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BCA8A35-7E9F-4110-B154-07B33B7B2BBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BCA8A35-7E9F-4110-B154-07B33B7B2BBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7589A511-9D3B-472C-8C3C-A1E17A3FAFD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7589A511-9D3B-472C-8C3C-A1E17A3FAFD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7589A511-9D3B-472C-8C3C-A1E17A3FAFD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7589A511-9D3B-472C-8C3C-A1E17A3FAFD9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D30EC857-F7B5-4FE8-B0E9-07A681E3F82B}
+	EndGlobalSection
+EndGlobal
