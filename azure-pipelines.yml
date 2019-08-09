@@ -16,11 +16,8 @@ variables:
   GitVersion.SemVer: ''
 
 steps:
-
 - task: gittools.gitversion.gitversion-task.GitVersion@4
   displayName: GitVersion
-  inputs:
-    preferBundledVersion: false
 
 - task: NuGetToolInstaller@1
 
@@ -40,8 +37,7 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-# do this near the end of your pipeline in most cases
-- script: dotnet pack /p:PackageVersion=$(GitVersion.SemVer)  # define version variable elsewhere in your pipeline
+- script: dotnet pack /p:PackageVersion=$(GitVersion.SemVer)
 - task: NuGetCommand@2
   inputs:
     command: push
