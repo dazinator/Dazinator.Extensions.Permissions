@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Dazinator.Extensions.Permissions.EFCore.EntityConfiguration
 {
-    public abstract class DefaultAppPermissionConfiguration<TAppPermission,  TAppPermissionType> : IEntityTypeConfiguration<TAppPermission>
+    public class DefaultAppPermissionConfiguration<TAppPermission,  TAppPermissionType> : IEntityTypeConfiguration<TAppPermission>
        where TAppPermissionType : class, IAppPermissionType, new()
        where TAppPermission : class, IAppPermission<TAppPermissionType>, new()
     {
