@@ -12,7 +12,7 @@ If your application does not host different Modules / Extensions within it, then
 ```
 using Dazinator.Extensions.Permissions;
 
-namespace Hub.Platform.Server.Services.Authorisation
+namespace Foo
 {
     [AppPermissions("MyCoolApp")]
     public enum MyCoolAppPermissions
@@ -40,15 +40,66 @@ The above therefore describes the following permissions that will be available i
 6. Edit Settings
 7. Execute ExportBlogs
 
+## Create the data model
+
+1. Add nuget package `Dazinator.Extensions.Permissions.EFCore`
+
+2. In your EF Core `DbContext` class, in the `OnModelCreating` method, apply the following entity configurations. 
+Note, if you need to customise the permissions data model, you need to create your own custom entities rather than using the Default entity types. You can also derive your own IEntityConfigurations.
 
 
-In your dbcontext:
+```csharp
+            var appConfig = new DefaultAppConfiguration<DefaultApp, DefaultAppPermissionType, DefaultAppPermission, DefaultAppPermissionSubject>();
+            builder.ApplyConfiguration(appConfig);
+
+            var appPermissionConfig = new DefaultAppPermissionConfiguration<DefaultAppPermission, DefaultAppPermissionType>();
+            builder.ApplyConfiguration(appPermissionConfig);
+
+            var appPermissionSubjectConfig = new DefaultAppPermissionSubjectConfiguration<DefaultAppPermissionSubject, DefaultAppPermissionType, DefaultAppPermission>();
+            builder.ApplyConfiguration(appPermissionSubjectConfig);
+
+            var appPermissionTypeConfig = new DefaultAppPermissionTypeConfiguration<DefaultAppPermissionType>();
+            builder.ApplyConfiguration(appPermissionTypeConfig);
+```
+
+## Register the IPermissionService which can be used to get / create permissions.
 
 ```
-TODO
+            // permission pased authorisation policy provider
+            services.AddPermissions<AppPermission, AppPermissionType, AppPermissionSubject, App>((builder) =>
+            {
+                builder.AddDbContextPermissionService<YourDbContext, AppPermission, AppPermissionType, AppPermissionSubject, App>()
+            });
 ```
 
-## Authorise based on these Permissions
+You can now inject `IPermissionsService` anywhere you need to get or create new app permissions.
+
+## Seed database with permissions
+
+To seed the database with the permissions you have defined via enum and attribute usage:
+
+```
+            services.AddPermissions<AppPermission, AppPermissionType, AppPermissionSubject, App>((builder) =>
+            {
+                builder.AddDbContextPermissionService<YourDbContext, AppPermission, AppPermissionType, AppPermissionSubject, App>()
+                       .AddSeeder()
+					   .SeedPermissionsFromType<MyCoolAppPermissions>();
+			});
+           
+```
+
+You can now inject / resolve the `IAppPermissionsSeeder` somewhere on startup and use it like so:
+
+```
+var seeder = sp.GetRequiredService<IAppPermissionsSeeder<AppPermission, AppPermissionSubject, AppPermissionType, App>>();
+await seeder.Seed();
+```
+
+If you look in the database, the tables will now be populated with apps and permissions, matching your enum / attribute definition.
+
+
+## Authorisation based on Permissions
+
 
 1. Add nuget package `Dazinator.Extensions.Permissions.Authorisation`
 
@@ -60,12 +111,14 @@ In startup.cs
             services.AddPermissions<AppPermission, AppPermissionType, AppPermissionSubject, App>((builder) =>
             {
                 builder.AddAuthorisationPolicyProvider()            
-                // omitted for brevity
+                // rest omitted for brevity
             });
 
 ```
 
-2. Above your controllers:
+This registers a custom AuthorisationPolicyProvider for permissions wirth asp.net core authorisation system.
+
+2. Above your controllers you can use the following attribute:
 
 ```
 
@@ -78,3 +131,34 @@ In startup.cs
 
 ```
 
+Note: if you get sick and tired of repeating the "App Code" i.e "MyCoolApp" when you can derive your own attribute:
+
+
+```
+
+    public class MyCoolAppPermissionAuthorizeAttribute : PermissionAuthorizeAttribute
+    {      
+        /// <summary>
+        /// Creates a new instance of <see cref="AuthorizeAttribute"/> class.
+        /// </summary>
+        /// <param name="permissions">A list of permissions to authorize</param>
+        public MyCoolAppPermissionAuthorizeAttribute(MyCoolAppPermissions subject, params PermissionTypes[] permissionTypes):base("MyCoolApp", (int)subject, permissionTypes)
+        {
+            
+        }
+    }
+```
+
+Now you can just do this:
+
+
+```
+
+        [MyCoolAppPermissionAuthorize(MyCoolAppPermissions.WeatherForecast, PermissionTypes.View)]
+        [HttpGet("[action]")]
+        public IActionResult WeatherForecast()
+        {           
+            return Ok(); // return weather forecast here - it's ok as user has View WeatherForecast permission
+        }
+
+```
