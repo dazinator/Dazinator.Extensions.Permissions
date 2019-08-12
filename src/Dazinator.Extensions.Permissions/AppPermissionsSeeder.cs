@@ -62,14 +62,16 @@ namespace Dazinator.Extensions.Permissions
 
         protected virtual void SeedAppPermissions(AppPermissionsAttribute appPermssionAttribute, Type permissionsEnumType)
         {
-            var app = PermissionService.GetOrCreateApp(appPermssionAttribute.AppCode);          
+            var app = PermissionService.GetOrCreateApp(appPermssionAttribute.AppCode);
+            OnAppSeeded(app);
 
             // Ensure each subject is defined
             var enumValues = Enum.GetValues(permissionsEnumType);
             foreach (var subjectId in enumValues)
             {
                 var subjectName = Enum.GetName(permissionsEnumType, subjectId);
-                var appPermissionSubject = EnsureSubject(app, subjectName, (int)subjectId);
+                var appPermissionSubject = GetOrCreateSubject(app, subjectName, (int)subjectId);
+                OnPermissionSubjectSeeded(appPermissionSubject);
 
                 // ensure each permission is defined for each subject.
                 var permissionField = permissionsEnumType.GetField(subjectName);
@@ -77,6 +79,14 @@ namespace Dazinator.Extensions.Permissions
                 SeedAppPermission(permissionField, app, appPermissionSubject, permissionTypesAttributes);
 
             }
+        }
+
+        protected virtual void OnAppSeeded(TApp app)
+        {          
+        }
+
+        protected virtual void OnPermissionSubjectSeeded(TAppPermissionSubject appPermissionSubject)
+        {
         }
 
         protected virtual void SeedAppPermission(FieldInfo permissionField, TApp app, TAppPermissionSubject appPermissionSubject, List<ApplicablePermissionTypesAttribute> permissionTypesAttributes)
@@ -87,18 +97,23 @@ namespace Dazinator.Extensions.Permissions
 
                 foreach (var allowedPermissionType in applicablePermissionTypes)
                 {
-                    var appPermission = EnsurePermission(app, appPermissionSubject, allowedPermissionType);
+                    var appPermission = GetOrCreatePermission(app, appPermissionSubject, allowedPermissionType);
+                    OnPermissionSeeded(appPermission);
                 }
             }
 
         }
 
-        private TAppPermission EnsurePermission(TApp app, TAppPermissionSubject appPermissionSubject, PermissionTypes allowedPermissionType)
+        protected virtual void OnPermissionSeeded(TAppPermission appPermission)
+        {   
+        }
+
+        private TAppPermission GetOrCreatePermission(TApp app, TAppPermissionSubject appPermissionSubject, PermissionTypes allowedPermissionType)
         {
             return PermissionService.GetOrCreatePermission(app, appPermissionSubject, allowedPermissionType);
         }
 
-        private TAppPermissionSubject EnsureSubject(TApp app, string name, int enumValue)
+        private TAppPermissionSubject GetOrCreateSubject(TApp app, string name, int enumValue)
         {
             return PermissionService.GetOrCreateAppSubject(app, name, enumValue);
         }      
