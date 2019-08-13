@@ -1,6 +1,7 @@
 ﻿using Dazinator.Extensions.Permissions.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,7 +46,7 @@ namespace Dazinator.Extensions.Permissions
         protected virtual TAppPermissionType CreatePermissionTypeEntity(int permissionTypeId, string name)
         {
             return new TAppPermissionType() { Id = permissionTypeId, Name = name };
-        }       
+        }
 
         public TAppPermissionType GetPermissionType(PermissionTypes permissionType)
         {
@@ -123,6 +124,20 @@ namespace Dazinator.Extensions.Permissions
             }
 
             return GetPermission(app, subject, permissionType);
+        }
+
+        public IEnumerable<TAppPermission> FindPermissions(string appCode, string subjectName = null, int? permissionTypeId = null)
+        {
+            var app = GetApp(appCode);
+            if (app == null)
+            {
+                return Enumerable.Empty<TAppPermission>();
+            }
+
+            var results = app.Subjects.Where((s) => subjectName == null || s.Name == subjectName)
+                .SelectMany(a => a.Permissions.Where(p => permissionTypeId == null || p.AppPermissionTypeId == permissionTypeId));
+
+            return results;            
         }
 
         #endregion

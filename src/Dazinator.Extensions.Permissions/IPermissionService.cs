@@ -1,4 +1,5 @@
 ﻿using Dazinator.Extensions.Permissions.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Dazinator.Extensions.Permissions
@@ -19,7 +20,8 @@ namespace Dazinator.Extensions.Permissions
         TAppPermission GetPermission(TApp app, TAppPermissionSubject appPermissionSubject, TAppPermissionType allowedPermissionType);
 
         TAppPermission FindPermission(string appCode, string subjectName, PermissionTypes permissionType);
-        TAppPermission FindPermission(string appCode, string subjectName, int permissionTypeId);       
+        TAppPermission FindPermission(string appCode, string subjectName, int permissionTypeId);
+        IEnumerable<TAppPermission> FindPermissions(string appCode, string subjectName = null, int? permissionTypeId = null);
         TAppPermissionType GetOrCreatePermissionType(PermissionTypes permissionType);
         TAppPermissionType GetOrCreatePermissionType(int id, string name);
         TAppPermissionType GetPermissionType(PermissionTypes permissionType);
