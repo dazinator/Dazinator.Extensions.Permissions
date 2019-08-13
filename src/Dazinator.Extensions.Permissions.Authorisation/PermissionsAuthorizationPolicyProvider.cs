@@ -23,7 +23,7 @@ namespace Dazinator.Extensions.Permissions
             var permissionSegments = policyName.Substring(PermissionAuthorizeAttribute.PolicyPrefix.Length).Split(':');
             var appCode = permissionSegments[0];
             var subjectId = permissionSegments[1];
-            var permissionTypes = permissionSegments[2].Split(",");
+            var permissionTypes = permissionSegments[2].Split(',');
 
             var permissionClaimValues = new List<string>(permissionTypes.Length);
             foreach (var permissionType in permissionTypes)

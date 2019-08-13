@@ -21,9 +21,9 @@ steps:
   displayName: gitversion
 
 - task: DotNetCoreInstaller@0
-  displayName: 'Use .NET Core sdk 3 preview 61'
+  displayName: 'Use .NET Core sdk'
   inputs:
-    version: 3.0.100-preview6-012264    
+    version: 2.2.100    
 
 - task: NuGetToolInstaller@1
   inputs:
