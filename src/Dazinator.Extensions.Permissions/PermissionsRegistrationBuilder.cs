@@ -18,11 +18,35 @@ namespace Dazinator.Extensions.Permissions
 
         public IServiceCollection Services => _services;
 
+        private static IServiceCollection AddScopedForwardedTo<TForwardedFrom, TForwardedTo>(IServiceCollection services)
+        where TForwardedTo : class, TForwardedFrom
+        where TForwardedFrom : class
+        {
+            services.AddScoped<TForwardedFrom>((x) => x.GetRequiredService<TForwardedTo>());
+            return services;
+        }
+
         public PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddPermissionService<TPermissionService>()
         where TPermissionService : class, IPermissionService<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>
 
         {
             Services.AddScoped<IPermissionService<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>, TPermissionService>();
+            return this;
+        }
+
+        /// <summary>
+        /// Register the PermissionService such that it will be resolved when <typeparamref name="TDerivedInterface"/> is requested. Also forwards request from <see cref="IPermissionService<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>"/> to <typeparamref name="TDerivedInterface"/>
+        /// </summary>
+        /// <typeparam name="TPermissionService"></typeparam>
+        /// <typeparam name="TForwardedInterface"></typeparam>
+        /// <returns></returns>
+        public PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddPermissionService<TPermissionService, TDerivedInterface>()
+            where TPermissionService : class, TDerivedInterface
+            where TDerivedInterface : class, IPermissionService<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>
+
+        {
+            AddScopedForwardedTo<IPermissionService<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>, TDerivedInterface>(Services);
+            Services.AddScoped<TDerivedInterface, TPermissionService>();
             return this;
         }
 
