@@ -10,7 +10,7 @@ namespace Dazinator.Extensions.Permissions.EFCore.EntityConfiguration
     {
         public virtual void Configure(EntityTypeBuilder<TAppPermission> builder)
         {           
-            builder.HasIndex(o => new { o.AppPermissionSubjectId, o.AppPermissionTypeId }).IsUnique();
+            builder.HasIndex(o => new {o.AppId, o.AppPermissionSubjectId, o.AppPermissionTypeId }).IsUnique();
         }
     }
 }
