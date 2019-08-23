@@ -47,6 +47,13 @@ steps:
     versionEnvVar: 'GitVersion.SemVer'
 
 - task: DotNetCoreCLI@2
+  displayName: test
+  inputs:
+    command: test
+    projects: '$(solution)'
+    configuration: '$(buildConfiguration)'   
+
+- task: DotNetCoreCLI@2
   inputs: 
     command: 'pack'    
     versioningScheme: byEnvVar
