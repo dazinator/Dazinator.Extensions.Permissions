@@ -132,7 +132,7 @@ namespace Dazinator.Extensions.Permissions
             if (app == null)
             {
                 return Enumerable.Empty<TAppPermission>();
-            }
+            }           
 
             var results = app.Subjects.Where((s) => subjectName == null || s.Name == subjectName)
                 .SelectMany(a => a.Permissions.Where(p => permissionTypeId == null || p.AppPermissionTypeId == permissionTypeId));
@@ -173,8 +173,8 @@ namespace Dazinator.Extensions.Permissions
         {
             var appSet = _dbContext.Set<TApp>();
             var existing = appSet
-                    //.Include(a => a.Subjects)
-                    //  .ThenInclude((a) => a.Permissions)
+                    .Include(a => a.Subjects)
+                      .ThenInclude((a) => a.Permissions)
                     .FirstOrDefault((a) => a.Code == appCode);
 
             if (existing == null)
@@ -189,8 +189,8 @@ namespace Dazinator.Extensions.Permissions
         {
             var appSet = _dbContext.Set<TApp>();
             var existing = appSet
-                    //.Include(a => a.Subjects)
-                    //  .ThenInclude((a) => a.Permissions)
+                    .Include(a => a.Subjects)
+                      .ThenInclude((a) => a.Permissions)
                     .FirstOrDefault((a) => a.Code == appCode);
 
             return existing;
