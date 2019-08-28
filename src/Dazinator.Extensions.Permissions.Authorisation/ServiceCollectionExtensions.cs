@@ -9,7 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
 
         /// <summary>
-        /// Adds an <see cref="IPermissionService{TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType}"/> backed by a DbContext using the specified entity types. Use this if you have derived your own entities. 
+        /// Adds an <see cref="IPermissionStore{TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType}"/> backed by a DbContext using the specified entity types. Use this if you have derived your own entities. 
         /// </summary>
         /// <typeparam name="TDbContext"></typeparam>
         /// <typeparam name="TAppPermission"></typeparam>

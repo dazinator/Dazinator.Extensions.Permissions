@@ -26,27 +26,27 @@ namespace Dazinator.Extensions.Permissions
             return services;
         }
 
-        public PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddPermissionService<TPermissionService>()
-        where TPermissionService : class, IPermissionService<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>
+        public PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddStore<TPermissionStore>()
+        where TPermissionStore : class, IPermissionStore<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>
 
         {
-            Services.AddScoped<IPermissionService<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>, TPermissionService>();
+            Services.AddScoped<IPermissionStore<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>, TPermissionStore>();
             return this;
         }
 
         /// <summary>
-        /// Register the PermissionService such that it will be resolved when <typeparamref name="TDerivedInterface"/> is requested. Also forwards request from <see cref="IPermissionService<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>"/> to <typeparamref name="TDerivedInterface"/>
+        /// Register the PermissionStore such that it will be resolved when <typeparamref name="TDerivedInterface"/> is requested. Also forwards request from <see cref="IPermissionStore<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>"/> to <typeparamref name="TDerivedInterface"/>
         /// </summary>
-        /// <typeparam name="TPermissionService"></typeparam>
+        /// <typeparam name="TPermissionStore"></typeparam>
         /// <typeparam name="TForwardedInterface"></typeparam>
         /// <returns></returns>
-        public PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddPermissionService<TPermissionService, TDerivedInterface>()
-            where TPermissionService : class, TDerivedInterface
-            where TDerivedInterface : class, IPermissionService<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>
+        public PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddStore<TPermissionStore, TDerivedInterface>()
+            where TPermissionStore : class, TDerivedInterface
+            where TDerivedInterface : class, IPermissionStore<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>
 
         {
-            AddScopedForwardedTo<IPermissionService<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>, TDerivedInterface>(Services);
-            Services.AddScoped<TDerivedInterface, TPermissionService>();
+            AddScopedForwardedTo<IPermissionStore<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>, TDerivedInterface>(Services);
+            Services.AddScoped<TDerivedInterface, TPermissionStore>();
             return this;
         }
 
@@ -76,8 +76,6 @@ namespace Dazinator.Extensions.Permissions
             });
             return this;
         }
-
-
 
         // extension method for ef core.
     }

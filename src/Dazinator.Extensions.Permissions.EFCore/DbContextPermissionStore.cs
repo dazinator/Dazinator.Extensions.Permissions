@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Dazinator.Extensions.Permissions
 {
 
-    public class DbContextPermissionService<TDbContext, TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType> : IPermissionService<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType> where TDbContext : DbContext
+    public class DbContextPermissionStore<TDbContext, TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType> : IPermissionStore<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType> where TDbContext : DbContext
            where TAppPermissionType : class, IAppPermissionType, new()
           where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()
           where TAppPermissionSubject : class, IAppPermissionSubject<TAppPermission, TAppPermissionType>, new()
@@ -17,7 +17,7 @@ namespace Dazinator.Extensions.Permissions
     {
         private readonly TDbContext _dbContext;
 
-        public DbContextPermissionService(TDbContext dbContext)
+        public DbContextPermissionStore(TDbContext dbContext)
         {
             _dbContext = dbContext;
         }

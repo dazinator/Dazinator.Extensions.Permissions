@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Dazinator.Extensions.Permissions.Tests
 {
-    public class DbContextPermissionServiceTests
+    public class DbContextPermissionStoreTests
     {
 
         [Fact]
@@ -18,7 +18,7 @@ namespace Dazinator.Extensions.Permissions.Tests
             var services = new ServiceCollection();
             services.AddDbContext<TestDbContext>((options) =>
             {
-                options.UseInMemoryDatabase(nameof(DbContextPermissionServiceTests));
+                options.UseInMemoryDatabase(nameof(DbContextPermissionStoreTests));
             });
 
             services.AddPermissions<DefaultAppPermission, DefaultAppPermissionType, DefaultAppPermissionSubject, DefaultApp>((builder) =>
@@ -35,14 +35,14 @@ namespace Dazinator.Extensions.Permissions.Tests
             using (var scope = sp.CreateScope())
             {
                 var seeder = scope.ServiceProvider.GetRequiredService<IAppPermissionsSeeder<DefaultAppPermission, DefaultAppPermissionSubject, DefaultAppPermissionType, DefaultApp>>();
-                var permissionService = scope.ServiceProvider.GetRequiredService<IPermissionService<DefaultApp, DefaultAppPermission, DefaultAppPermissionSubject, DefaultAppPermissionType>>();
+                var permissionService = scope.ServiceProvider.GetRequiredService<IPermissionStore<DefaultApp, DefaultAppPermission, DefaultAppPermissionSubject, DefaultAppPermissionType>>();
                 await seeder.Seed(permissionService);
             }
 
             // Act
             using (var scope = sp.CreateScope())
             {
-                var permissionService = scope.ServiceProvider.GetRequiredService<IPermissionService<DefaultApp, DefaultAppPermission, DefaultAppPermissionSubject, DefaultAppPermissionType>>();
+                var permissionService = scope.ServiceProvider.GetRequiredService<IPermissionStore<DefaultApp, DefaultAppPermission, DefaultAppPermissionSubject, DefaultAppPermissionType>>();
                 var app = permissionService.GetApp("System");
                 Assert.NotNull(app);
 

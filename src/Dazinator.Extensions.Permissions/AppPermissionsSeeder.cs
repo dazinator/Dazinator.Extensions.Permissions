@@ -18,14 +18,14 @@ namespace Dazinator.Extensions.Permissions
     {
         private readonly IOptions<AppPermissionsSeederOptions> _seedOptions;
 
-        protected IPermissionService<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType> PermissionService { get; set; }
+        protected IPermissionStore<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType> PermissionService { get; set; }
         public AppPermissionsSeeder(IOptions<AppPermissionsSeederOptions> seedOptions)
         {
             _seedOptions = seedOptions;
             // _permissionService = permissionService;
         }
 
-        public async Task Seed(IPermissionService<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType> permissionService)
+        public async Task Seed(IPermissionStore<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType> permissionService)
         {
             PermissionService = permissionService;
             foreach (var item in _seedOptions.Value.AppPermissionTypes.ToArray())

@@ -18,7 +18,7 @@ namespace Dazinator.Extensions.Permissions.Tests
             var services = new ServiceCollection();
             services.AddDbContext<TestDbContext>((options) =>
             {
-                options.UseInMemoryDatabase(nameof(DbContextPermissionServiceTests));
+                options.UseInMemoryDatabase(nameof(DbContextPermissionStoreTests));
             });
 
             services.AddPermissions<DefaultAppPermission, DefaultAppPermissionType, DefaultAppPermissionSubject, DefaultApp>((builder) =>
@@ -37,7 +37,7 @@ namespace Dazinator.Extensions.Permissions.Tests
             using (var scope = sp.CreateScope())
             {
                 var seeder = scope.ServiceProvider.GetRequiredService<IAppPermissionsSeeder<DefaultAppPermission, DefaultAppPermissionSubject, DefaultAppPermissionType, DefaultApp>>();
-                var permissionService = scope.ServiceProvider.GetRequiredService<IPermissionService<DefaultApp, DefaultAppPermission, DefaultAppPermissionSubject, DefaultAppPermissionType>>();
+                var permissionService = scope.ServiceProvider.GetRequiredService<IPermissionStore<DefaultApp, DefaultAppPermission, DefaultAppPermissionSubject, DefaultAppPermissionType>>();
                 await seeder.Seed(permissionService);
             }
 
@@ -47,7 +47,7 @@ namespace Dazinator.Extensions.Permissions.Tests
             // Assert
             using (var scope = sp.CreateScope())
             {
-                var permissionService = scope.ServiceProvider.GetRequiredService<IPermissionService<DefaultApp, DefaultAppPermission, DefaultAppPermissionSubject, DefaultAppPermissionType>>();
+                var permissionService = scope.ServiceProvider.GetRequiredService<IPermissionStore<DefaultApp, DefaultAppPermission, DefaultAppPermissionSubject, DefaultAppPermissionType>>();
                 var app = permissionService.GetApp("AddOn");
                 Assert.NotNull(app);
 

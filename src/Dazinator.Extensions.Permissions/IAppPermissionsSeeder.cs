@@ -9,6 +9,6 @@ namespace Dazinator.Extensions.Permissions
           where TAppPermissionSubject : IAppPermissionSubject<TAppPermission, TAppPermissionType>
           where TApp : IApp<TAppPermissionSubject, TAppPermission, TAppPermissionType>
     {
-        Task Seed(IPermissionService<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType> permissionService);
+        Task Seed(IPermissionStore<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType> permissionService);
     }
 }
