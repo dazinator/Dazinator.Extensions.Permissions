@@ -24,9 +24,9 @@ namespace Dazinator.Extensions.Permissions
             PermissionTypes = list.ToArray();
         }
 
-        public PermissionTypesAttribute(params Tuple<int, string>[] types)
+        public PermissionTypesAttribute(int permissionTypeId, string permissionTypeName)
         {
-            PermissionTypes = types;
+            PermissionTypes = new Tuple<int, string>[] { new Tuple<int, string>(permissionTypeId, permissionTypeName) };
         }
 
         public Tuple<int, string>[] PermissionTypes { get; }
