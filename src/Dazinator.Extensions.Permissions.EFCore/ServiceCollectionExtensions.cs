@@ -22,8 +22,8 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public static PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddDbContextPermissionService<TDbContext, TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp>(this PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> builder)
           where TDbContext : DbContext
-           where TAppPermissionType : class, IAppPermissionType, new()
-          where TAppPermission : class, IAppPermission<TAppPermissionType>, new()
+          where TAppPermissionType : class, IAppPermissionType, new()
+          where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()
           where TAppPermissionSubject : class, IAppPermissionSubject<TAppPermission, TAppPermissionType>, new()
           where TApp : class,IApp<TAppPermissionSubject, TAppPermission, TAppPermissionType>, new()
            

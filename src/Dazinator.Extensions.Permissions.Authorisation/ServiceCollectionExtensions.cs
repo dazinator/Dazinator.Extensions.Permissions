@@ -19,8 +19,8 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="builder"></param>
         /// <returns></returns>
         public static PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddAuthorisationPolicyProvider<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp>(this PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> builder)
-           where TAppPermissionType : IAppPermissionType, new()
-          where TAppPermission : IAppPermission<TAppPermissionType>, new()
+          where TAppPermissionType : IAppPermissionType, new()
+          where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()
           where TAppPermissionSubject : IAppPermissionSubject<TAppPermission, TAppPermissionType>, new()
           where TApp : IApp<TAppPermissionSubject, TAppPermission, TAppPermissionType>, new()
 

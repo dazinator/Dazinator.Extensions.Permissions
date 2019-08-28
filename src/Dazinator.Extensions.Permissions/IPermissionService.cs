@@ -6,7 +6,7 @@ namespace Dazinator.Extensions.Permissions
 {
     public interface IPermissionService<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>
           where TAppPermissionType : IAppPermissionType
-          where TAppPermission : IAppPermission<TAppPermissionType>
+          where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()
           where TAppPermissionSubject : IAppPermissionSubject<TAppPermission, TAppPermissionType>
           where TApp : IApp<TAppPermissionSubject, TAppPermission, TAppPermissionType>
     {

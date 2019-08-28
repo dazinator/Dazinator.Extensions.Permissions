@@ -4,7 +4,7 @@ namespace Dazinator.Extensions.Permissions.Entities
 {
     public interface IApp<TAppPermissionSubject, TAppPermission, TAppPermissionType>
         where TAppPermissionSubject : IAppPermissionSubject<TAppPermission, TAppPermissionType>
-        where TAppPermission : IAppPermission<TAppPermissionType>
+        where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()
         where TAppPermissionType : IAppPermissionType
     {
         string Code { get; set; }

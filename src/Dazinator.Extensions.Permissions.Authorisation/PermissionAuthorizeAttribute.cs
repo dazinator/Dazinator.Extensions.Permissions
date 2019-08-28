@@ -18,6 +18,17 @@ namespace Dazinator.Extensions.Permissions
             _appCode = AppCode;
             _subjectId = subjectId;
         }
-     
+
+        /// <summary>
+        /// Creates a new instance of <see cref="AuthorizeAttribute"/> class.
+        /// </summary>
+        /// <param name="permissions">A list of permissions to authorize</param>
+        public PermissionAuthorizeAttribute(string AppCode, int subjectId, params int[] permissionTypes)
+        {
+            Policy = $"{PolicyPrefix}{_appCode}:{_subjectId}:{string.Join(",", permissionTypes)}";
+            _appCode = AppCode;
+            _subjectId = subjectId;
+        }
+
     }
 }

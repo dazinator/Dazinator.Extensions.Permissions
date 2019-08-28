@@ -10,7 +10,7 @@ namespace Dazinator.Extensions.Permissions
 
     public class DbContextPermissionService<TDbContext, TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType> : IPermissionService<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType> where TDbContext : DbContext
            where TAppPermissionType : class, IAppPermissionType, new()
-          where TAppPermission : class, IAppPermission<TAppPermissionType>, new()
+          where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()
           where TAppPermissionSubject : class, IAppPermissionSubject<TAppPermission, TAppPermissionType>, new()
           where TApp : class, IApp<TAppPermissionSubject, TAppPermission, TAppPermissionType>, new()
 
@@ -31,6 +31,12 @@ namespace Dazinator.Extensions.Permissions
             return GetOrCreatePermissionType(permissionTypeId, name);
         }
 
+        /// <summary>
+        /// Gets the permission type with the specified id if it exists. If it doesn't exist, creates it with the specified id and name.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name">name only used if permission type is created.</param>
+        /// <returns></returns>
         public TAppPermissionType GetOrCreatePermissionType(int id, string name)
         {
             var set = _dbContext.Set<TAppPermissionType>();
@@ -132,21 +138,28 @@ namespace Dazinator.Extensions.Permissions
             if (app == null)
             {
                 return Enumerable.Empty<TAppPermission>();
-            }           
+            }
 
             var results = app.Subjects.Where((s) => subjectName == null || s.Name == subjectName)
                 .SelectMany(a => a.Permissions.Where(p => permissionTypeId == null || p.AppPermissionTypeId == permissionTypeId));
 
-            return results;            
+            return results;
         }
 
         #endregion
 
         #region Subject
 
+        /// <summary>
+        /// Gets the existing subject for the app, with the specified subject id. Creates the subject if not found.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="name">Only used if subject is created.</param>
+        /// <param name="subjectId"></param>
+        /// <returns></returns>
         public virtual TAppPermissionSubject GetOrCreateAppSubject(TApp app, string name, int subjectId)
         {
-            var existing = app.Subjects.FirstOrDefault((a) => (a.Name == name) && (a.Id == subjectId));
+            var existing = app.Subjects.FirstOrDefault(a => a.Id == subjectId);
             if (existing == null)
             {
                 existing = CreateSubjectEntity(subjectId, name);

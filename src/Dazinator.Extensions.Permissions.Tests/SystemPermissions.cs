@@ -3,13 +3,13 @@
     [AppPermissions("System")]
     public enum SystemPermissions
     {
-        [ApplicablePermissionTypes(PermissionTypes.Create, PermissionTypes.Edit, PermissionTypes.Delete, PermissionTypes.View)]
+        [PermissionTypes(PermissionTypes.Create, PermissionTypes.Edit, PermissionTypes.Delete, PermissionTypes.View)]
         Users = 1,
-        [ApplicablePermissionTypes(PermissionTypes.Execute)]
+        [PermissionTypes(PermissionTypes.Execute)]
         UserEnable = 2,
-        [ApplicablePermissionTypes(PermissionTypes.Execute)]
+        [PermissionTypes(PermissionTypes.Execute)]
         UserDisable = 3,
-        [ApplicablePermissionTypes(PermissionTypes.Create, PermissionTypes.Edit, PermissionTypes.Delete, PermissionTypes.View)]
+        [PermissionTypes(PermissionTypes.Create, PermissionTypes.Edit, PermissionTypes.Delete, PermissionTypes.View)]
         Roles = 4,
     }
 

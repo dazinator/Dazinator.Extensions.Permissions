@@ -5,7 +5,7 @@ namespace Dazinator.Extensions.Permissions
 {
     public class PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp>
           where TAppPermissionType : IAppPermissionType
-          where TAppPermission : IAppPermission<TAppPermissionType>
+          where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()
           where TAppPermissionSubject : IAppPermissionSubject<TAppPermission, TAppPermissionType>
           where TApp : IApp<TAppPermissionSubject, TAppPermission, TAppPermissionType>
     {

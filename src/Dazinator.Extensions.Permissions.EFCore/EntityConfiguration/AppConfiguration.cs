@@ -6,7 +6,7 @@ namespace Dazinator.Extensions.Permissions.EFCore.EntityConfiguration
 {
     public class AppConfiguration<TApp, TAppPermissionType, TAppPermission, TAppPermissionSubject> : IEntityTypeConfiguration<TApp>
         where TAppPermissionType : class, IAppPermissionType, new()
-        where TAppPermission : class, IAppPermission<TAppPermissionType>, new()
+        where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()
         where TAppPermissionSubject : class, IAppPermissionSubject<TAppPermission, TAppPermissionType>, new()
         where TApp : class, IApp<TAppPermissionSubject, TAppPermission, TAppPermissionType>, new()
     {
