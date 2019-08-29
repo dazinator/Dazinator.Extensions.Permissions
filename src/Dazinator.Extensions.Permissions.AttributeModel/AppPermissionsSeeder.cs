@@ -104,9 +104,35 @@ namespace Dazinator.Extensions.Permissions.AttributeModel
                 TApp parentApp = default(TApp);
                 TAppPermissionSubject parentSubject = default(TAppPermissionSubject);
                
-                if (permissionTypesAttribute.DependsOnPermissionTypeId != null)
+                if(permissionTypesAttribute.DependsOnPermissionTypeId == null && permissionTypesAttribute.DependsOn != null)
+                {
+                    // perhaps the DependsOn subject only has a single permission type if so, use that so it doesn't have to be specified.
+                    var typeofParentPermission = permissionTypesAttribute.DependsOn.GetType();
+                    var subjectName = Enum.GetName(typeofParentPermission, permissionTypesAttribute.DependsOn);
+                    var dependsOnPermissionField = typeofParentPermission.GetField(subjectName);
+                    var parentSubjectPermissionTypes = dependsOnPermissionField.GetCustomAttributes(false).OfType<PermissionTypesAttribute>().ToList();
+                    if (parentSubjectPermissionTypes.Count != 1)
+                    {
+                        throw new InvalidOperationException($"A permission depends on {subjectName} enum field, however that field does not have a single PermissionTypesAttribute. Either ensure there is a single PermissionTypesAttribute or adjust the DependsOn to specify the PermissionType");
+                    }
+                   
+                    var first = parentSubjectPermissionTypes.First();
+                    if(first.PermissionTypes.Count()!=1)
+                    {
+                        throw new InvalidOperationException($"A permission depends on {subjectName} enum field, however that field does not have a PermissionTypesAttribute with a single Permission type so the permission type for the dependency could not be inferred. Either modify the attribute to have a single permission type, or adjust the DependsOn that references this enum field, to specify the PermissionType");
+                    }
+                    var singlePermissionType = first.PermissionTypes.First();
+
+                    parentPermissionType = PermissionService.GetOrCreatePermissionType(singlePermissionType.Item1, singlePermissionType.Item2);
+
+                }
+                else if(permissionTypesAttribute.DependsOnPermissionTypeId != null)
                 {
                     parentPermissionType = PermissionService.GetOrCreatePermissionType(permissionTypesAttribute.DependsOnPermissionTypeId.Value, null);
+                }
+
+                if (parentPermissionType != null)
+                {
 
                     if (permissionTypesAttribute.DependsOn != null)
                     {
@@ -126,7 +152,8 @@ namespace Dazinator.Extensions.Permissions.AttributeModel
                         parentSubject = UpdateOrCreateSubject(parentApp, null, parentSubjectId);
 
                     }
-                }        
+                }
+               
 
                 var applicablePermissionTypes = permissionTypesAttribute.PermissionTypes;
 
