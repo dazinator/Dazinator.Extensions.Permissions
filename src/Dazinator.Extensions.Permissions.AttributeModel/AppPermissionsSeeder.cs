@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Dazinator.Extensions.Permissions
+namespace Dazinator.Extensions.Permissions.AttributeModel
 {
 
     public class AppPermissionsSeeder<TAppPermission, TAppPermissionSubject, TAppPermissionType, TApp> : IAppPermissionsSeeder<TAppPermission, TAppPermissionSubject, TAppPermissionType, TApp>

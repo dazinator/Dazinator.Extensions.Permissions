@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Dazinator.Extensions.Permissions
+namespace Dazinator.Extensions.Permissions.AttributeModel
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     public class PermissionTypesAttribute : Attribute

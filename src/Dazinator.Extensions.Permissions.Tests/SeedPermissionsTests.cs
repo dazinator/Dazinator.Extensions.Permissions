@@ -25,9 +25,9 @@ namespace Dazinator.Extensions.Permissions.Tests
             {
                 builder
                  .AddDbContextDefaultPermissionService<TestDbContext>()
-                .AddSeeder()
-                .SeedPermissionsFromType<SystemPermissions>()
-                .SeedPermissionsFromType<AddOnPermissions>();
+                 .AddAttributeModelSeeder()
+                 .SeedPermissionsFromType(typeof(SystemPermissions))
+                 .SeedPermissionsFromType(typeof(AddOnPermissions));                
             });
 
             var sp = services.BuildServiceProvider();

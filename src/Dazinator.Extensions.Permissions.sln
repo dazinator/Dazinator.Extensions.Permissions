@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.779
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29209.152
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dazinator.Extensions.Permissions", "Dazinator.Extensions.Permissions\Dazinator.Extensions.Permissions.csproj", "{3D861699-553C-4E99-B5A9-F21A253ECC6A}"
 EndProject
@@ -20,7 +20,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dazinator.Extensions.Permissions.Tests", "Dazinator.Extensions.Permissions.Tests\Dazinator.Extensions.Permissions.Tests.csproj", "{D619DE77-D9AD-4752-A39C-CF912919B86C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dazinator.Extensions.Permissions.Tests", "Dazinator.Extensions.Permissions.Tests\Dazinator.Extensions.Permissions.Tests.csproj", "{D619DE77-D9AD-4752-A39C-CF912919B86C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dazinator.Extensions.Permissions.AttributeModel", "Dazinator.Extensions.Permissions.AttributeModel\Dazinator.Extensions.Permissions.AttributeModel.csproj", "{EB6026F5-EC8E-43FF-B7ED-B64DFC92E189}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +50,10 @@ Global
 		{D619DE77-D9AD-4752-A39C-CF912919B86C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D619DE77-D9AD-4752-A39C-CF912919B86C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D619DE77-D9AD-4752-A39C-CF912919B86C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB6026F5-EC8E-43FF-B7ED-B64DFC92E189}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB6026F5-EC8E-43FF-B7ED-B64DFC92E189}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB6026F5-EC8E-43FF-B7ED-B64DFC92E189}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB6026F5-EC8E-43FF-B7ED-B64DFC92E189}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

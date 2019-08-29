@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Dazinator.Extensions.Permissions.AttributeModel\Dazinator.Extensions.Permissions.AttributeModel.csproj" />
     <ProjectReference Include="..\Dazinator.Extensions.Permissions.EFCore\Dazinator.Extensions.Permissions.EFCore.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,6 @@
-﻿namespace Dazinator.Extensions.Permissions.Tests
+﻿using Dazinator.Extensions.Permissions.AttributeModel;
+
+namespace Dazinator.Extensions.Permissions.Tests
 {
     [AppPermissions("AddOn")]
     public enum AddOnPermissions
