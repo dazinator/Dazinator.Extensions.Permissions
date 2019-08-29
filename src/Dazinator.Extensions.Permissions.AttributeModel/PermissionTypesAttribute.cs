@@ -53,21 +53,11 @@ namespace Dazinator.Extensions.Permissions.AttributeModel
         //public bool EditDependsOnView { get; set; } = true;
 
         public object DependsOn { get; set; }
-        public int? DependsOnPermissionTypeId { get; set; }
+       // public int? DependsOnPermissionTypeId { get; set; }
 
         //public object DependsOnPermissionType { get; set; }
 
-        public object DependsOnPermissionType
-        {
-            get
-            {
-                return  (object)DependsOnPermissionTypeId;
-            }
-            set
-            {
-                DependsOnPermissionTypeId = (int)value;
-            }            
-        }
+        public object DependsOnPermissionType { get; set; }       
 
     }
 

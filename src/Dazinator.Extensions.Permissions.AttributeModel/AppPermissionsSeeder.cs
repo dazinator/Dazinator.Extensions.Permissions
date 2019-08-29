@@ -103,8 +103,8 @@ namespace Dazinator.Extensions.Permissions.AttributeModel
                 TAppPermissionType parentPermissionType = default(TAppPermissionType);
                 TApp parentApp = default(TApp);
                 TAppPermissionSubject parentSubject = default(TAppPermissionSubject);
-               
-                if(permissionTypesAttribute.DependsOnPermissionTypeId == null && permissionTypesAttribute.DependsOn != null)
+
+                if (permissionTypesAttribute.DependsOnPermissionType == null && permissionTypesAttribute.DependsOn != null)
                 {
                     // perhaps the DependsOn subject only has a single permission type if so, use that so it doesn't have to be specified.
                     var typeofParentPermission = permissionTypesAttribute.DependsOn.GetType();
@@ -115,9 +115,9 @@ namespace Dazinator.Extensions.Permissions.AttributeModel
                     {
                         throw new InvalidOperationException($"A permission depends on {subjectName} enum field, however that field does not have a single PermissionTypesAttribute. Either ensure there is a single PermissionTypesAttribute or adjust the DependsOn to specify the PermissionType");
                     }
-                   
+
                     var first = parentSubjectPermissionTypes.First();
-                    if(first.PermissionTypes.Count()!=1)
+                    if (first.PermissionTypes.Count() != 1)
                     {
                         throw new InvalidOperationException($"A permission depends on {subjectName} enum field, however that field does not have a PermissionTypesAttribute with a single Permission type so the permission type for the dependency could not be inferred. Either modify the attribute to have a single permission type, or adjust the DependsOn that references this enum field, to specify the PermissionType");
                     }
@@ -126,9 +126,12 @@ namespace Dazinator.Extensions.Permissions.AttributeModel
                     parentPermissionType = PermissionService.GetOrCreatePermissionType(singlePermissionType.Item1, singlePermissionType.Item2);
 
                 }
-                else if(permissionTypesAttribute.DependsOnPermissionTypeId != null)
+                else if (permissionTypesAttribute.DependsOnPermissionType != null)
                 {
-                    parentPermissionType = PermissionService.GetOrCreatePermissionType(permissionTypesAttribute.DependsOnPermissionTypeId.Value, null);
+                    var type = permissionTypesAttribute.DependsOnPermissionType.GetType();
+                    var name = Enum.GetName(type, permissionTypesAttribute.DependsOnPermissionType);
+                    var id = (int)permissionTypesAttribute.DependsOnPermissionType;
+                    parentPermissionType = PermissionService.GetOrCreatePermissionType(id, name);
                 }
 
                 if (parentPermissionType != null)
@@ -149,11 +152,18 @@ namespace Dazinator.Extensions.Permissions.AttributeModel
 
                         parentApp = PermissionService.GetOrCreateApp(parentPermissionAttribute.AppCode);
                         var parentSubjectId = (int)permissionTypesAttribute.DependsOn;
-                        parentSubject = UpdateOrCreateSubject(parentApp, null, parentSubjectId);
+                        var name = Enum.GetName(permissionTypesAttribute.DependsOn.GetType(), permissionTypesAttribute.DependsOn);
+                        parentSubject = UpdateOrCreateSubject(parentApp, name, parentSubjectId);
 
                     }
+                    else
+                    {
+                        // use current subject
+                        parentApp = app;
+                        parentSubject = appPermissionSubject;
+                    }
                 }
-               
+
 
                 var applicablePermissionTypes = permissionTypesAttribute.PermissionTypes;
 
@@ -166,18 +176,18 @@ namespace Dazinator.Extensions.Permissions.AttributeModel
                     if (parentPermissionType != null)
                     {
 
-                        if (parentApp != null)
-                        {
-                            var depIdentifier = new Tuple<TApp, TAppPermissionSubject, TAppPermissionType>(parentApp, parentSubject, parentPermissionType);
-                            deps.Add(new Tuple<TAppPermission, Tuple<TApp, TAppPermissionSubject, TAppPermissionType>>(appPermission, depIdentifier));
-                        }
-                        else
-                        {
-                            // use current app code and subject id
-                            var depIdentifier = new Tuple<TApp, TAppPermissionSubject, TAppPermissionType>(app, appPermissionSubject, parentPermissionType);
-                            deps.Add(new Tuple<TAppPermission, Tuple<TApp, TAppPermissionSubject, TAppPermissionType>>(appPermission, depIdentifier));
-                            //  TAppPermission parent =
-                        }
+                        //if (parentApp != null)
+                        //{
+                        var depIdentifier = new Tuple<TApp, TAppPermissionSubject, TAppPermissionType>(parentApp, parentSubject, parentPermissionType);
+                        deps.Add(new Tuple<TAppPermission, Tuple<TApp, TAppPermissionSubject, TAppPermissionType>>(appPermission, depIdentifier));
+                        //}
+                        //else
+                        //{
+                        //    // use current app code and subject id
+                        //    var depIdentifier = new Tuple<TApp, TAppPermissionSubject, TAppPermissionType>(app, appPermissionSubject, parentPermissionType);
+                        //    deps.Add(new Tuple<TAppPermission, Tuple<TApp, TAppPermissionSubject, TAppPermissionType>>(appPermission, depIdentifier));
+                        //    //  TAppPermission parent =
+                        //}
                     }
                 }
             }
