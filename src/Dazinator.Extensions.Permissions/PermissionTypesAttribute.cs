@@ -24,6 +24,20 @@ namespace Dazinator.Extensions.Permissions
             PermissionTypes = list.ToArray();
         }
 
+        public PermissionTypesAttribute(params object[] permissionTypeEnums)
+        {
+            var list = new List<Tuple<int, string>>();
+
+            foreach (var item in permissionTypeEnums)
+            {
+                var name = Enum.GetName(item.GetType(), item);
+                var id = (int)item;
+                list.Add(new Tuple<int, string>(id, name));
+            }
+
+            PermissionTypes = list.ToArray();
+        }
+
         public PermissionTypesAttribute(int permissionTypeId, string permissionTypeName)
         {
             PermissionTypes = new Tuple<int, string>[] { new Tuple<int, string>(permissionTypeId, permissionTypeName) };
