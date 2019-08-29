@@ -55,11 +55,13 @@ namespace Dazinator.Extensions.Permissions
         public object DependsOn { get; set; }
         public int? DependsOnPermissionTypeId { get; set; }
 
-        public PermissionTypes DependsOnPermissionType
+        //public object DependsOnPermissionType { get; set; }
+
+        public object DependsOnPermissionType
         {
             get
             {
-                return  (PermissionTypes)DependsOnPermissionTypeId;
+                return  (object)DependsOnPermissionTypeId;
             }
             set
             {
