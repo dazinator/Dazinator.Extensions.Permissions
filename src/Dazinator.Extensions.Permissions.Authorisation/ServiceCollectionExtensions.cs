@@ -2,6 +2,7 @@
 using Dazinator.Extensions.Permissions.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -26,6 +27,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         {
             builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionsAuthorizationPolicyProvider>();
+            builder.Services.AddSingleton<PermissionPolicyNameProvider>();
             return builder;
         }     
 

@@ -8,6 +8,9 @@ namespace Dazinator.Extensions.Permissions
 {
     public partial class PermissionsAuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
     {
+        internal const string PolicyPrefix = "PERM:";
+
+
         public PermissionsAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options)
             : base(options)
         {
@@ -15,12 +18,12 @@ namespace Dazinator.Extensions.Permissions
 
         public override Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
         {
-            if (!policyName.StartsWith(PermissionAuthorizeAttribute.PolicyPrefix, StringComparison.OrdinalIgnoreCase))
+            if (!policyName.StartsWith(PermissionsAuthorizationPolicyProvider.PolicyPrefix, StringComparison.OrdinalIgnoreCase))
             {
                 return base.GetPolicyAsync(policyName);
             }
 
-            var permissionSegments = policyName.Substring(PermissionAuthorizeAttribute.PolicyPrefix.Length).Split(':');
+            var permissionSegments = policyName.Substring(PermissionsAuthorizationPolicyProvider.PolicyPrefix.Length).Split(':');
             var appCode = permissionSegments[0];
             var subjectId = permissionSegments[1];
             var permissionTypes = permissionSegments[2].Split(',');
@@ -31,7 +34,7 @@ namespace Dazinator.Extensions.Permissions
                 var permission = $"{appCode}-{subjectId}-{permissionType}";
                 permissionClaimValues.Add(permission);
             }
-           
+
             // Policy = $"{PolicyPrefix}{_appCode}:{_subject}:{string.Join(",", permissionTypes)}";
 
             // var permissionNames = policyName.Substring(PermissionAuthorizeAttribute.PolicyPrefix.Length).Split(',');
@@ -42,5 +45,7 @@ namespace Dazinator.Extensions.Permissions
 
             return Task.FromResult(policy);
         }
+
+       
     }
 }
