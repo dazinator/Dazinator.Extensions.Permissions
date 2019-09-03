@@ -1,6 +1,4 @@
-﻿using Dazinator.Extensions.Permissions;
-
-namespace Microsoft.Extensions.DependencyInjection
+﻿namespace Dazinator.Extensions.Permissions
 {
     public class PermissionPolicyNameProvider
     {
