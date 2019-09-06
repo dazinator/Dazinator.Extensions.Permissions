@@ -8,8 +8,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.2.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Dazinator.Extensions.Permissions\Dazinator.Extensions.Permissions.csproj" />
-  </ItemGroup>
+  <Import Project="..\Dazinator.Extensions.Permissions.Shared\Dazinator.Extensions.Permissions.Shared.projitems" Label="Shared" />
 
 </Project>

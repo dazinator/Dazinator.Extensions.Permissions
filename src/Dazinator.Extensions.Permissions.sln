@@ -22,9 +22,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dazinator.Extensions.Permissions.Tests", "Dazinator.Extensions.Permissions.Tests\Dazinator.Extensions.Permissions.Tests.csproj", "{D619DE77-D9AD-4752-A39C-CF912919B86C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dazinator.Extensions.Permissions.AttributeModel", "Dazinator.Extensions.Permissions.AttributeModel\Dazinator.Extensions.Permissions.AttributeModel.csproj", "{EB6026F5-EC8E-43FF-B7ED-B64DFC92E189}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dazinator.Extensions.Permissions.AttributeModel", "Dazinator.Extensions.Permissions.AttributeModel\Dazinator.Extensions.Permissions.AttributeModel.csproj", "{EB6026F5-EC8E-43FF-B7ED-B64DFC92E189}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Dazinator.Extensions.Permissions.Shared", "Dazinator.Extensions.Permissions.Shared\Dazinator.Extensions.Permissions.Shared.shproj", "{CE27801F-BC0E-427A-8AFC-1E32B5B3D304}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Dazinator.Extensions.Permissions.Shared\Dazinator.Extensions.Permissions.Shared.projitems*{ce27801f-bc0e-427a-8afc-1e32b5b3d304}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
