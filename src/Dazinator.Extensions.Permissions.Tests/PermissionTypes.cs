@@ -1,4 +1,4 @@
-﻿namespace Dazinator.Extensions.Permissions
+﻿namespace Dazinator.Extensions.Permissions.Tests
 {
     public enum PermissionTypes
     {
@@ -8,4 +8,5 @@
         Delete = 4,
         Execute = 5
     }
+
 }

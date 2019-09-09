@@ -6,24 +6,6 @@ namespace Dazinator.Extensions.Permissions.AttributeModel
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     public class PermissionTypesAttribute : Attribute
     {
-        public PermissionTypesAttribute(params PermissionTypes[] types)
-        {
-            var list = new List<Tuple<int, string>>();
-            foreach (var item in types)
-            {
-                //if (item == Permissions.PermissionTypes.Edit)
-                //{
-                //    if (EditDependsOnView)
-                //    {
-
-                //    }
-                //}
-                var name = Enum.GetName(typeof(PermissionTypes), item);
-                list.Add(new Tuple<int, string>((int)item, name));
-            }
-            PermissionTypes = list.ToArray();
-        }
-
         public PermissionTypesAttribute(params object[] permissionTypeEnums)
         {
             var list = new List<Tuple<int, string>>();

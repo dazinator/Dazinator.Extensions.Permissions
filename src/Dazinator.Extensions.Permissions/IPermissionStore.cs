@@ -16,16 +16,11 @@ namespace Dazinator.Extensions.Permissions
         TAppPermissionSubject GetOrCreateAppSubject(TApp app, string name, int subjectId);
         TAppPermissionSubject GetAppSubject(TApp app, string name);
         TAppPermission GetOrCreatePermission(TApp app, TAppPermissionSubject appPermissionSubject, TAppPermissionType allowedPermissionType);
-        TAppPermission GetOrCreatePermission(TApp app, TAppPermissionSubject appPermissionSubject, PermissionTypes allowedPermissionType);
         TAppPermission GetPermission(TApp app, TAppPermissionSubject appPermissionSubject, TAppPermissionType allowedPermissionType);
-
-        TAppPermission FindPermission(string appCode, string subjectName, PermissionTypes permissionType);
         TAppPermission FindPermission(string appCode, string subjectName, int permissionTypeId);
         IEnumerable<TAppPermission> FindPermissions(string appCode, string subjectName = null, int? permissionTypeId = null);
-        TAppPermissionType GetOrCreatePermissionType(PermissionTypes permissionType);
         TAppPermissionType GetOrCreatePermissionType(int id, string name);
-        TAppPermissionType GetPermissionType(PermissionTypes permissionType);
-        TAppPermissionType GetPermissionType(int permissionTypeId);      
+        TAppPermissionType GetPermissionType(int permissionTypeId);
 
         Task SaveChangesAsync();
     }

@@ -12,6 +12,4 @@
     <ProjectReference Include="..\Dazinator.Extensions.Permissions.Entities\Dazinator.Extensions.Permissions.Entities.csproj" />
   </ItemGroup>
 
-  <Import Project="..\Dazinator.Extensions.Permissions.Shared\Dazinator.Extensions.Permissions.Shared.projitems" Label="Shared" />
-
 </Project>

@@ -22,14 +22,7 @@ namespace Dazinator.Extensions.Permissions
             _dbContext = dbContext;
         }
 
-        #region PermissionType
-
-        public virtual TAppPermissionType GetOrCreatePermissionType(PermissionTypes permissionType)
-        {
-            var name = Enum.GetName(typeof(PermissionTypes), permissionType);
-            var permissionTypeId = (int)permissionType;
-            return GetOrCreatePermissionType(permissionTypeId, name);
-        }
+        #region PermissionType     
 
         /// <summary>
         /// Gets the permission type with the specified id if it exists. If it doesn't exist, creates it with the specified id and name.
@@ -53,13 +46,7 @@ namespace Dazinator.Extensions.Permissions
         {
             return new TAppPermissionType() { Id = permissionTypeId, Name = name };
         }
-
-        public TAppPermissionType GetPermissionType(PermissionTypes permissionType)
-        {
-            var id = (int)permissionType;
-            return GetPermissionType(id);
-        }
-
+              
         public TAppPermissionType GetPermissionType(int id)
         {
             var set = _dbContext.Set<TAppPermissionType>();
@@ -69,12 +56,6 @@ namespace Dazinator.Extensions.Permissions
         #endregion
 
         #region Permission
-        public virtual TAppPermission GetOrCreatePermission(TApp app, TAppPermissionSubject appPermissionSubject, PermissionTypes allowedPermissionType)
-        {
-            var permissionType = GetOrCreatePermissionType(allowedPermissionType);
-            return GetOrCreatePermission(app, appPermissionSubject, permissionType);
-        }
-
         public TAppPermission GetOrCreatePermission(TApp app, TAppPermissionSubject appPermissionSubject, TAppPermissionType allowedPermissionType)
         {
             // var permissionTypeId = (int)allowedPermissionType;
@@ -103,12 +84,7 @@ namespace Dazinator.Extensions.Permissions
             var existing = appPermissionSubject.Permissions.FirstOrDefault((a) => a.AppPermissionType == allowedPermissionType);
             return existing;
         }
-
-        public TAppPermission FindPermission(string appCode, string subjectName, PermissionTypes permissionType)
-        {
-            return FindPermission(appCode, subjectName, (int)permissionType);
-        }
-
+            
         public TAppPermission FindPermission(string appCode, string subjectName, int permissionTypeId)
         {
             var app = GetApp(appCode);

@@ -1,4 +1,4 @@
-﻿namespace Dazinator.Extensions.Permissions
+﻿namespace Dazinator.Extensions.Permissions.Authorisation
 {
     public static class CustomClaimTypes
     {

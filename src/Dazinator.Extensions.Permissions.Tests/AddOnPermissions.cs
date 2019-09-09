@@ -2,6 +2,7 @@
 
 namespace Dazinator.Extensions.Permissions.Tests
 {
+
     [AppPermissions("AddOn")]
     public enum AddOnPermissions
     {
