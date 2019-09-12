@@ -24,9 +24,9 @@ namespace Dazinator.Extensions.Permissions
         /// <param name="permissions">A list of permissions to authorize</param>
         public PermissionAuthorizeAttribute(string AppCode, int subjectId, params int[] permissionTypes)
         {
-            Policy = $"{PermissionsAuthorizationPolicyProvider.PolicyPrefix}{_appCode}:{_subjectId}:{string.Join(",", permissionTypes)}";
             _appCode = AppCode;
             _subjectId = subjectId;
+            Policy = $"{PermissionsAuthorizationPolicyProvider.PolicyPrefix}{_appCode}:{_subjectId}:{string.Join(",", permissionTypes)}";
         }
 
     }
