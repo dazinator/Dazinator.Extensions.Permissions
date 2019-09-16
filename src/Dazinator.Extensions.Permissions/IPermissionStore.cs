@@ -13,6 +13,7 @@ namespace Dazinator.Extensions.Permissions
         TApp GetOrCreateApp(string appCode);
 
         TApp GetApp(string appCode);
+        TApp GetApp(int id);
         TAppPermissionSubject GetOrCreateAppSubject(TApp app, string name, int subjectId);
         TAppPermissionSubject GetAppSubject(TApp app, string name);
         TAppPermission GetOrCreatePermission(TApp app, TAppPermissionSubject appPermissionSubject, TAppPermissionType allowedPermissionType);

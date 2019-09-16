@@ -41,7 +41,7 @@ namespace Dazinator.Extensions.Permissions
         /// <typeparam name="TPermissionStore"></typeparam>
         /// <typeparam name="TForwardedInterface"></typeparam>
         /// <returns></returns>
-        public PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddPermissionsStore<TPermissionStore, TDerivedInterface>()
+        public PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddPermissionStore<TPermissionStore, TDerivedInterface>()
             where TPermissionStore : class, TDerivedInterface
             where TDerivedInterface : class, IPermissionStore<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>
 

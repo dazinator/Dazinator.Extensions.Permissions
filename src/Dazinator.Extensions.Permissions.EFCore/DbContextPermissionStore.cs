@@ -1,6 +1,5 @@
 ﻿using Dazinator.Extensions.Permissions.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -158,6 +157,12 @@ namespace Dazinator.Extensions.Permissions
         #endregion
 
         #region App
+        public TApp GetApp(int id)
+        {
+            var appSet = _dbContext.Set<TApp>();
+            return appSet.Single(a => a.Id == id);
+        }
+
         public virtual TApp GetOrCreateApp(string appCode)
         {
             
@@ -210,6 +215,6 @@ namespace Dazinator.Extensions.Permissions
         {
             await _dbContext.SaveChangesAsync();
         }
-
+    
     }
 }
