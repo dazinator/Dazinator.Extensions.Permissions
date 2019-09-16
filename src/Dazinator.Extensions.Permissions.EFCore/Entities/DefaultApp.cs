@@ -8,6 +8,7 @@ namespace Dazinator.Extensions.Permissions.Entities
 
     }
 
+
     //[Table("AppPermission")]
     //public abstract class BasePermission<TAppPermission> : IAppPermission<TAppPermission>
     //    where TAppPermission : BasePermission<TAppPermission>

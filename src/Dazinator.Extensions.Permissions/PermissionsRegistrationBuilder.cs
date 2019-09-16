@@ -1,5 +1,6 @@
 ﻿using Dazinator.Extensions.Permissions.Entities;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Dazinator.Extensions.Permissions
 {
@@ -26,7 +27,7 @@ namespace Dazinator.Extensions.Permissions
             return services;
         }
 
-        public PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddStore<TPermissionStore>()
+        public PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddPermissionStore<TPermissionStore>()
         where TPermissionStore : class, IPermissionStore<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>
 
         {
@@ -40,7 +41,7 @@ namespace Dazinator.Extensions.Permissions
         /// <typeparam name="TPermissionStore"></typeparam>
         /// <typeparam name="TForwardedInterface"></typeparam>
         /// <returns></returns>
-        public PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddStore<TPermissionStore, TDerivedInterface>()
+        public PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddPermissionsStore<TPermissionStore, TDerivedInterface>()
             where TPermissionStore : class, TDerivedInterface
             where TDerivedInterface : class, IPermissionStore<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>
 
@@ -48,7 +49,25 @@ namespace Dazinator.Extensions.Permissions
             AddScopedForwardedTo<IPermissionStore<TApp, TAppPermission, TAppPermissionSubject, TAppPermissionType>, TDerivedInterface>(Services);
             Services.AddScoped<TDerivedInterface, TPermissionStore>();
             return this;
-        }    
+        }
+
+        public PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddUserPermissions<TUserIdKey, TUserPermission>(Action<UserPermissionsRegistrationBuilder<TUserIdKey, TUserPermission, TAppPermission, TAppPermissionType>> configure)
+            where TUserIdKey:IEquatable<TUserIdKey>
+            where TUserPermission: IUserPermission<TUserIdKey, TAppPermission, TAppPermissionType>
+        {
+            var builder = new UserPermissionsRegistrationBuilder<TUserIdKey, TUserPermission, TAppPermission, TAppPermissionType>(Services);
+            configure(builder);
+            return this;
+        }
+
+        public PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddRolePermissions<TRoleIdKey, TRolePermission>(Action<RolePermissionsRegistrationBuilder<TRoleIdKey, TRolePermission, TAppPermission, TAppPermissionType>> configure)
+           where TRoleIdKey : IEquatable<TRoleIdKey>
+           where TRolePermission : IRolePermission<TRoleIdKey, TAppPermission, TAppPermissionType>
+        {
+            var builder = new RolePermissionsRegistrationBuilder<TRoleIdKey, TRolePermission, TAppPermission, TAppPermissionType>(Services);
+            configure(builder);
+            return this;
+        }
 
     }
 }

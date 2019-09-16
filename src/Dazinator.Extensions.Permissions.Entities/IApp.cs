@@ -12,4 +12,13 @@ namespace Dazinator.Extensions.Permissions.Entities
         HashSet<TAppPermission> Permissions { get; set; }
         HashSet<TAppPermissionSubject> Subjects { get; set; }
     }
+
+    public interface IUser<TAppPermissionSubject, TAppPermission, TAppPermissionType>
+        where TAppPermissionSubject : IAppPermissionSubject<TAppPermission, TAppPermissionType>
+        where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()
+        where TAppPermissionType : IAppPermissionType
+    {      
+        HashSet<TAppPermission> Permissions { get; set; }
+        HashSet<TAppPermissionSubject> Subjects { get; set; }
+    }
 }

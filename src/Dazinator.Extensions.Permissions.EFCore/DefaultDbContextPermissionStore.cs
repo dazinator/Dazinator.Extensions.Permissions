@@ -10,4 +10,5 @@ namespace Dazinator.Extensions.Permissions
         {
         }
     }
+
 }

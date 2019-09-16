@@ -8,17 +8,16 @@ using Xunit;
 
 namespace Dazinator.Extensions.Permissions.Tests
 {
-    public class DbContextPermissionStoreTests
+    public class DbContextUserPermissionStoreTests
     {
-
         [Fact]
-        public async Task CanGetAppWithPermissions()
+        public async Task CanGetUserPermissions()
         {
             // Arrange
             var services = new ServiceCollection();
             services.AddDbContext<TestDbContext>((options) =>
             {
-                options.UseInMemoryDatabase(nameof(DbContextPermissionStoreTests));
+                options.UseInMemoryDatabase(nameof(DbContextUserPermissionStoreTests));
             });
 
             services.AddPermissions<DefaultAppPermission, DefaultAppPermissionType, DefaultAppPermissionSubject, DefaultApp>((builder) =>
@@ -28,9 +27,9 @@ namespace Dazinator.Extensions.Permissions.Tests
                  .AddAttributeModelSeeder()
                  .SeedPermissionsFromType(typeof(SystemPermissions));
 
-                builder.AddUserPermissions<int, DefaultUserPermission>(c =>
+                builder.AddUserPermissions<int, DefaultUserPermission>((a) =>
                 {
-                    c.AddDbContextDefaultUserPermissionStore<TestDbContext>();
+                    a.AddDbContextDefaultUserPermissionStore<TestDbContext>();
                 });
             });
 
@@ -48,18 +47,24 @@ namespace Dazinator.Extensions.Permissions.Tests
             using (var scope = sp.CreateScope())
             {
                 var permissionService = scope.ServiceProvider.GetRequiredService<IPermissionStore<DefaultApp, DefaultAppPermission, DefaultAppPermissionSubject, DefaultAppPermissionType>>();
-                var app = permissionService.GetApp("System");
-                Assert.NotNull(app);
+                var perm = permissionService.FindPermission("System", SystemPermissions.Roles.ToString(), (int)PermissionTypes.Create);
 
-                var perms = app.Permissions;
-                Assert.NotNull(perms);
 
-                var subjects = app.Subjects;
-                Assert.NotNull(subjects);
+                var dbContext = scope.ServiceProvider.GetRequiredService<TestDbContext>();
+                var newUser = new User();
+                newUser.Permissions.Add(new DefaultUserPermission() { Permission = perm });
+                dbContext.Users.Add(newUser);
+                dbContext.SaveChanges();
 
-                var permissionSubjects = Enum.GetNames(typeof(SystemPermissions));
-                Assert.NotNull(subjects);
-                Assert.Equal(permissionSubjects.Count(), permissionSubjects.Count());
+                var newUserId = newUser.Id;
+
+                var userPermissionStore = scope.ServiceProvider.GetRequiredService<IUserPermissionStore<int, DefaultUserPermission, DefaultAppPermission, DefaultAppPermissionType>>();
+                //   userPermissionStore.AddUserPermission(1, perm);
+                var userPerms = await userPermissionStore.GetPermissionsAsync(newUserId);
+
+                //var app = permissionService.GetApp("System");
+                Assert.NotNull(userPerms);
+                Assert.Single(userPerms);
 
             }
 
@@ -67,7 +72,6 @@ namespace Dazinator.Extensions.Permissions.Tests
 
 
         }
-
     }
 
 }

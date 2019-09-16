@@ -15,6 +15,7 @@ namespace Microsoft.Extensions.DependencyInjection
             var builder = new PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp>(services);
             configure(builder);
             return services;
-        }   
+        }
+       
     }
 }
