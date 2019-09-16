@@ -81,7 +81,7 @@ namespace Dazinator.Extensions.Permissions
             return perm;
         }
 
-        public Task<bool> HasPermissionAsync(TUserIdKey userId, int permissionId, CancellationToken cancellationToken = default)
+        public Task<bool> HasPermissionAsync(TUserIdKey userId, int permissionId, CancellationToken cancellationToken = default(CancellationToken))
         {
             return UserPermissions.AnyAsync(a => a.UserId.Equals(userId) && a.PermissionId == permissionId);  
         }
