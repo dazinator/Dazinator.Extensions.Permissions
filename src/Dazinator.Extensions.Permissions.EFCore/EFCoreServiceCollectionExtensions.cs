@@ -51,6 +51,17 @@ namespace Microsoft.Extensions.DependencyInjection
             return builder;
         }
 
+        public static UserPermissionsRegistrationBuilder<TKey, TUserPermission, TAppPermission, TAppPermissionType> AddDbContextUserPermissionStore<TDbContext, TKey, TUserPermission, TAppPermission, TAppPermissionType>(this UserPermissionsRegistrationBuilder<TKey, TUserPermission, TAppPermission, TAppPermissionType> builder)
+          where TDbContext : DbContext
+          where TKey : IEquatable<TKey>
+          where TUserPermission : class, IUserPermission<TKey, TAppPermission, TAppPermissionType>, new()
+          where TAppPermissionType : class, IAppPermissionType, new()
+          where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()
+        {
+            builder.AddUserPermissionStore<DbContextUserPermissionStore<TDbContext, TKey, TUserPermission, TAppPermission, TAppPermissionType>>();
+            return builder;
+        }
+
         public static RolePermissionsRegistrationBuilder<int, DefaultRolePermission, DefaultAppPermission, DefaultAppPermissionType> AddDbContextDefaultRolePermissionStore<TDbContext>(this RolePermissionsRegistrationBuilder<int, DefaultRolePermission, DefaultAppPermission, DefaultAppPermissionType> builder)
            where TDbContext : DbContext
         {
@@ -58,6 +69,16 @@ namespace Microsoft.Extensions.DependencyInjection
             return builder;
         }
 
+        public static RolePermissionsRegistrationBuilder<TKey, TRolePermission, TAppPermission, TAppPermissionType> AddDbContextRolePermissionStore<TDbContext, TKey, TRolePermission, TAppPermission, TAppPermissionType>(this RolePermissionsRegistrationBuilder<TKey, TRolePermission, TAppPermission, TAppPermissionType> builder)
+          where TDbContext : DbContext
+          where TKey : IEquatable<TKey>
+          where TRolePermission : class, IRolePermission<TKey, TAppPermission, TAppPermissionType>, new()
+          where TAppPermissionType : class, IAppPermissionType, new()
+          where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()
+        {
+            builder.AddRolePermissionStore<DbContextRolePermissionStore<TDbContext, TKey, TRolePermission, TAppPermission, TAppPermissionType>>();
+            return builder;
+        }
 
 
 
