@@ -9,7 +9,7 @@ namespace Dazinator.Extensions.Permissions
 {
     public partial class PermissionsAuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
     {
-        internal const string PolicyPrefix = "PERM:";
+        public const string PolicyPrefix = "PERM:";
 
 
         public PermissionsAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options)
