@@ -1,29 +1,43 @@
 ﻿using Dazinator.Extensions.Permissions.Authorisation;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Dazinator.Extensions.Permissions
 {
-    public partial class PermissionsAuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
+    public partial class PermissionsAuthorizationPolicyProvider : IAuthorizationPolicyProvider
     {
         public const string PolicyPrefix = "PERM:";
+        private readonly IAuthorizationPolicyProvider _innerProvider;
+        private readonly Task<AuthorizationPolicy> NullResult = Task.FromResult(default(AuthorizationPolicy));
 
-
-        public PermissionsAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options)
-            : base(options)
+        public PermissionsAuthorizationPolicyProvider(IAuthorizationPolicyProvider innerProvider = null)
         {
+            _innerProvider = innerProvider;
         }
 
-        public override Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
+        public Task<AuthorizationPolicy> GetDefaultPolicyAsync()
+        {
+            if(_innerProvider == null)
+            {
+                return NullResult;
+            }
+            return _innerProvider?.GetDefaultPolicyAsync();
+        }
+
+        public Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
         {
             if (!policyName.StartsWith(PermissionsAuthorizationPolicyProvider.PolicyPrefix, StringComparison.OrdinalIgnoreCase))
             {
-                return base.GetPolicyAsync(policyName);
+                if (_innerProvider == null)
+                {
+                    return NullResult;
+                }
+                return _innerProvider?.GetPolicyAsync(policyName);
             }
 
+            // TODO: Cache?
             var permissionSegments = policyName.Substring(PermissionsAuthorizationPolicyProvider.PolicyPrefix.Length).Split(':');
             var appCode = permissionSegments[0];
             var subjectId = permissionSegments[1];
@@ -36,17 +50,11 @@ namespace Dazinator.Extensions.Permissions
                 permissionClaimValues.Add(permission);
             }
 
-            // Policy = $"{PolicyPrefix}{_appCode}:{_subject}:{string.Join(",", permissionTypes)}";
-
-            // var permissionNames = policyName.Substring(PermissionAuthorizeAttribute.PolicyPrefix.Length).Split(',');
-
             var policy = new AuthorizationPolicyBuilder()
                 .RequireClaim(CustomClaimTypes.Permission, permissionClaimValues)
                 .Build();
 
             return Task.FromResult(policy);
         }
-
-       
     }
 }
