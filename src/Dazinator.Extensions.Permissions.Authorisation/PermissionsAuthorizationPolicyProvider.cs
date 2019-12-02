@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dazinator.Extensions.Permissions
 {
-    public partial class PermissionsAuthorizationPolicyProvider : IAuthorizationPolicyProvider
+    public class PermissionsAuthorizationPolicyProvider : IAuthorizationPolicyProvider
     {
         public const string PolicyPrefix = "PERM:";
         private readonly IAuthorizationPolicyProvider _innerProvider;
