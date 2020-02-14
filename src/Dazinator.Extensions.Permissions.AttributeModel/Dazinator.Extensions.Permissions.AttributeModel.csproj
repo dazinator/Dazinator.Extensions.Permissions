@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
+    <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
+  </PropertyGroup> 
 
   <ItemGroup>
     <ProjectReference Include="..\Dazinator.Extensions.Permissions\Dazinator.Extensions.Permissions.csproj" />
