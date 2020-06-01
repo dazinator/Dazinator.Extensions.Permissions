@@ -20,10 +20,12 @@ steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@5
   displayName: gitversion
 
-- task: DotNetCoreInstaller@0
-  displayName: 'Use .NET Core sdk 3 preview 61'
+- task: UseDotNet@2
+  displayName: 'Use .NET Core sdk'
   inputs:
-    version: 3.0.100-preview6-012264    
+    packageType: sdk    
+    useGlobalJson: true
+    installationPath: $(Agent.ToolsDirectory)/dotnet   
 
 - task: NuGetToolInstaller@1
   inputs:
@@ -34,19 +36,28 @@ steps:
   inputs:
     command: restore
     projects: '$(solution)'
-    vstsFeed: '2776577c-a22b-427d-b0b5-59ad9e7bca42'
 
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
+  displayName: Build
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:SkipInvalidConfigurations=true'
-    platform: '$(buildPlatform)'
+    command: build
+    projects: '$(solution)'
     configuration: '$(buildConfiguration)'
+    versioningScheme: byEnvVar
+    versionEnvVar: 'GitVersion.SemVer'
+
+- task: DotNetCoreCLI@2
+  displayName: test
+  inputs:
+    command: test
+    projects: '$(solution)'
+    configuration: '$(buildConfiguration)'   
 
 - task: DotNetCoreCLI@2
   inputs: 
     command: 'pack'    
-    versioningScheme: byBuildNumber
+    versioningScheme: byEnvVar
+    versionEnvVar: 'GitVersion.SemVer'
     
 - task: NuGetCommand@2
   inputs:

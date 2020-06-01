@@ -3,7 +3,7 @@
 namespace Dazinator.Extensions.Permissions.Entities
 {
     public interface IAppPermissionSubject<TAppPermission, TAppPermissionType>
-        where TAppPermission : IAppPermission<TAppPermissionType>
+        where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()
         where TAppPermissionType : IAppPermissionType
     {
         int Id { get; set; }

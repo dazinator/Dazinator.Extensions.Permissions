@@ -1,10 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dazinator.Extensions.Permissions.Entities
 {
     [Table("AppPermission")]
-    public class DefaultAppPermission : IAppPermission<DefaultAppPermissionType>
+    public class DefaultAppPermission : IAppPermission<DefaultAppPermission, DefaultAppPermissionType>
     {
+
+        public DefaultAppPermission()
+        {
+            Children = new HashSet<DefaultAppPermission>();
+        }
+
         //public virtual int Id { get; set; }
         //public int MinRequiredLicenceLevel { get; set; }
         public virtual int Id { get; set; }
@@ -17,6 +24,10 @@ namespace Dazinator.Extensions.Permissions.Entities
         public int AppPermissionSubjectId { get; set; }
         //public virtual int AppId { get; set; }
         //public App<AppPermissionSubject<AppPermission>, AppPermission> App { get; set; }
+
+        public int? ParentId { get; set; }
+        public virtual DefaultAppPermission Parent { get; set; }
+        public virtual ICollection<DefaultAppPermission> Children { get; set; }
 
     }
 

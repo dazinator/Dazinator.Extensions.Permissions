@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dazinator.Extensions.Permissions
+namespace Dazinator.Extensions.Permissions.AttributeModel
 {
     public class AppPermissionsAttribute : Attribute
     {

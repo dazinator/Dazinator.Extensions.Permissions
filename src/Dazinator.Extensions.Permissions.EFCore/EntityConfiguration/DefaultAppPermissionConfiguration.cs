@@ -1,16 +1,8 @@
 ﻿using Dazinator.Extensions.Permissions.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Dazinator.Extensions.Permissions.EFCore.EntityConfiguration
 {
-    public class DefaultAppPermissionConfiguration<TAppPermission,  TAppPermissionType> : IEntityTypeConfiguration<TAppPermission>
-       where TAppPermissionType : class, IAppPermissionType, new()
-       where TAppPermission : class, IAppPermission<TAppPermissionType>, new()
+    public class DefaultAppPermissionConfiguration : AppPermissionConfiguration<DefaultAppPermission, DefaultAppPermissionType>
     {
-        public virtual void Configure(EntityTypeBuilder<TAppPermission> builder)
-        {           
-            builder.HasIndex(o => new { o.AppPermissionSubjectId, o.AppPermissionTypeId }).IsUnique();
-        }
     }
 }

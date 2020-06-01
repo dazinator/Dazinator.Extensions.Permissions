@@ -1,29 +1,58 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
+﻿using Dazinator.Extensions.Permissions.Authorisation;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Dazinator.Extensions.Permissions
 {
-    public partial class PermissionsAuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
+    public class PermissionsAuthorizationPolicyProvider : IAuthorizationPolicyProvider
     {
-        public PermissionsAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options)
-            : base(options)
+        public const string PolicyPrefix = "PERM:";
+        private readonly IAuthorizationPolicyProvider _innerProvider;
+        private readonly Task<AuthorizationPolicy> NullResult = Task.FromResult(default(AuthorizationPolicy));
+
+        public PermissionsAuthorizationPolicyProvider(IAuthorizationPolicyProvider innerProvider = null)
         {
+            _innerProvider = innerProvider;
         }
 
-        public override Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
+        public Task<AuthorizationPolicy> GetDefaultPolicyAsync()
         {
-            if (!policyName.StartsWith(PermissionAuthorizeAttribute.PolicyPrefix, StringComparison.OrdinalIgnoreCase))
+            if (_innerProvider == null)
             {
-                return base.GetPolicyAsync(policyName);
+                return NullResult;
+            }
+            return _innerProvider?.GetDefaultPolicyAsync();
+        }
+
+#if NETSTANDARD2_1
+        public Task<AuthorizationPolicy> GetFallbackPolicyAsync()
+        {
+            if (_innerProvider == null)
+            {
+                return NullResult;
+            }
+            return _innerProvider?.GetFallbackPolicyAsync();
+        }
+#endif
+
+        public Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
+        {
+            if (!policyName.StartsWith(PermissionsAuthorizationPolicyProvider.PolicyPrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                if (_innerProvider == null)
+                {
+                    return NullResult;
+                }
+                return _innerProvider?.GetPolicyAsync(policyName);
             }
 
-            var permissionSegments = policyName.Substring(PermissionAuthorizeAttribute.PolicyPrefix.Length).Split(':');
+            // TODO: Cache?
+            var permissionSegments = policyName.Substring(PermissionsAuthorizationPolicyProvider.PolicyPrefix.Length).Split(':');
             var appCode = permissionSegments[0];
             var subjectId = permissionSegments[1];
-            var permissionTypes = permissionSegments[2].Split(",");
+            var permissionTypes = permissionSegments[2].Split(',');
 
             var permissionClaimValues = new List<string>(permissionTypes.Length);
             foreach (var permissionType in permissionTypes)
@@ -31,10 +60,6 @@ namespace Dazinator.Extensions.Permissions
                 var permission = $"{appCode}-{subjectId}-{permissionType}";
                 permissionClaimValues.Add(permission);
             }
-           
-            // Policy = $"{PolicyPrefix}{_appCode}:{_subject}:{string.Join(",", permissionTypes)}";
-
-            // var permissionNames = policyName.Substring(PermissionAuthorizeAttribute.PolicyPrefix.Length).Split(',');
 
             var policy = new AuthorizationPolicyBuilder()
                 .RequireClaim(CustomClaimTypes.Permission, permissionClaimValues)

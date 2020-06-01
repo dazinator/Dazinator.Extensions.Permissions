@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29123.89
+VisualStudioVersion = 16.0.29209.152
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dazinator.Extensions.Permissions", "Dazinator.Extensions.Permissions\Dazinator.Extensions.Permissions.csproj", "{3D861699-553C-4E99-B5A9-F21A253ECC6A}"
 EndProject
@@ -14,9 +14,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A00FC5E6-1633-4EDA-9FDB-3F7F86D3DE7A}"
 	ProjectSection(SolutionItems) = preProject
 		..\appveyor.yml = ..\appveyor.yml
+		..\azure-pipelines.yml = ..\azure-pipelines.yml
+		Directory.Build.props = Directory.Build.props
 		global.json = global.json
 		..\README.md = ..\README.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dazinator.Extensions.Permissions.Tests", "Dazinator.Extensions.Permissions.Tests\Dazinator.Extensions.Permissions.Tests.csproj", "{D619DE77-D9AD-4752-A39C-CF912919B86C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dazinator.Extensions.Permissions.AttributeModel", "Dazinator.Extensions.Permissions.AttributeModel\Dazinator.Extensions.Permissions.AttributeModel.csproj", "{EB6026F5-EC8E-43FF-B7ED-B64DFC92E189}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +46,14 @@ Global
 		{7589A511-9D3B-472C-8C3C-A1E17A3FAFD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7589A511-9D3B-472C-8C3C-A1E17A3FAFD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7589A511-9D3B-472C-8C3C-A1E17A3FAFD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D619DE77-D9AD-4752-A39C-CF912919B86C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D619DE77-D9AD-4752-A39C-CF912919B86C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D619DE77-D9AD-4752-A39C-CF912919B86C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D619DE77-D9AD-4752-A39C-CF912919B86C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB6026F5-EC8E-43FF-B7ED-B64DFC92E189}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB6026F5-EC8E-43FF-B7ED-B64DFC92E189}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB6026F5-EC8E-43FF-B7ED-B64DFC92E189}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB6026F5-EC8E-43FF-B7ED-B64DFC92E189}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
