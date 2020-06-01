@@ -32,16 +32,16 @@ namespace Dazinator.Extensions.Permissions.Tests
             builder.ApplyConfiguration(new DefaultAppPermissionTypeConfiguration());
             //This will singularize all table names
             // ef core 2.2
-            foreach (IMutableEntityType entityType in builder.Model.GetEntityTypes())
-            {
-                entityType.Relational().TableName = entityType.DisplayName();
-            }
-
-            ////  ef core 3.0.0
             //foreach (IMutableEntityType entityType in builder.Model.GetEntityTypes())
             //{
-            //    entityType.SetTableName(entityType.DisplayName());
+            //    entityType.Relational().TableName = entityType.DisplayName();
             //}
+
+            //  ef core 3.1.0
+            foreach (IMutableEntityType entityType in builder.Model.GetEntityTypes())
+            {
+                entityType.SetTableName(entityType.DisplayName());
+            }
 
 
         }

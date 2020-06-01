@@ -91,7 +91,7 @@ namespace Dazinator.Extensions.Permissions.Tests
             var services = new ServiceCollection();
             services.AddDbContext<TestDbContext>((options) =>
             {
-                options.UseInMemoryDatabase(nameof(DbContextPermissionStoreTests));
+                options.UseInMemoryDatabase(nameof(CanSeedPermissionsWithDependenciesComplex));
             });
 
             services.AddPermissions<DefaultAppPermission, DefaultAppPermissionType, DefaultAppPermissionSubject, DefaultApp>((builder) =>
