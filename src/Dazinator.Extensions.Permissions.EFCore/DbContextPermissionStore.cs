@@ -160,7 +160,11 @@ namespace Dazinator.Extensions.Permissions
         public TApp GetApp(int id)
         {
             var appSet = _dbContext.Set<TApp>();
-            return appSet.Single(a => a.Id == id);
+            return appSet
+                    .Include(b => b.Permissions)
+                    .Include(a => a.Subjects)
+                      .ThenInclude((a) => a.Permissions)
+                .Single(a => a.Id == id);
         }
 
         public virtual TApp GetOrCreateApp(string appCode)
@@ -174,6 +178,7 @@ namespace Dazinator.Extensions.Permissions
                 return existingLocal;
             }
             var existing = appSet
+                    .Include(b => b.Permissions)
                     .Include(a => a.Subjects)
                       .ThenInclude((a) => a.Permissions)
                     .FirstOrDefault((a) => a.Code == appCode);
@@ -197,7 +202,8 @@ namespace Dazinator.Extensions.Permissions
             }
 
             var existing = appSet
-                    .Include(a => a.Subjects)
+                    .Include(b => b.Permissions)
+                    .Include(a => a.Subjects)                    
                       .ThenInclude((a) => a.Permissions)
                     .FirstOrDefault((a) => a.Code == appCode);
 
