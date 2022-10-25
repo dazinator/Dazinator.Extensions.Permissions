@@ -6,5 +6,5 @@ namespace Dazinator.Extensions.Permissions.Entities
     public class DefaultAppPermissionSubject : AppPermissionSubject<DefaultAppPermission, DefaultAppPermissionType>
     {
 
-    }  
+    }
 }

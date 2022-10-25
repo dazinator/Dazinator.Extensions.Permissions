@@ -6,5 +6,5 @@ namespace Dazinator.Extensions.Permissions.Entities
     public class DefaultRolePermission : RolePermission<int, DefaultAppPermission, DefaultAppPermissionType>
     {
 
-    }  
+    }
 }

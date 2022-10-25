@@ -6,7 +6,7 @@ namespace Dazinator.Extensions.Permissions.Entities
     /// Represents the link between a user and a permission.
     /// </summary>
     /// <typeparam name="TKey">The type of the primary key used for users.</typeparam>
-    public abstract class UserPermission<TKey, TAppPermission, TAppPermissionType>: IUserPermission<TKey, TAppPermission, TAppPermissionType>
+    public abstract class UserPermission<TKey, TAppPermission, TAppPermissionType> : IUserPermission<TKey, TAppPermission, TAppPermissionType>
         where TKey : IEquatable<TKey>
         where TAppPermissionType : IAppPermissionType
         where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()

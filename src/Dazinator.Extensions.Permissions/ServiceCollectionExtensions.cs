@@ -16,6 +16,6 @@ namespace Microsoft.Extensions.DependencyInjection
             configure(builder);
             return services;
         }
-       
+
     }
 }

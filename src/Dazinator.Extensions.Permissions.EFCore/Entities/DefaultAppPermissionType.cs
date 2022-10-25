@@ -10,7 +10,7 @@ namespace Dazinator.Extensions.Permissions.Entities
 
         public DefaultAppPermissionType()
         {
-           // Permissions = new HashSet<TAppPermission>();
+            // Permissions = new HashSet<TAppPermission>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -20,7 +20,7 @@ namespace Dazinator.Extensions.Permissions.Entities
         [Required]
         public string Name { get; set; }
 
-      //  public HashSet<TAppPermission> Permissions { get; set; }
+        //  public HashSet<TAppPermission> Permissions { get; set; }
 
     }
 }

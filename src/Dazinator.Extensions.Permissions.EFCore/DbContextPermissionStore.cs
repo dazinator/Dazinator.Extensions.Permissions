@@ -45,7 +45,7 @@ namespace Dazinator.Extensions.Permissions
         {
             return new TAppPermissionType() { Id = permissionTypeId, Name = name };
         }
-              
+
         public TAppPermissionType GetPermissionType(int id)
         {
             var set = _dbContext.Set<TAppPermissionType>();
@@ -83,7 +83,7 @@ namespace Dazinator.Extensions.Permissions
             var existing = appPermissionSubject.Permissions.FirstOrDefault((a) => a.AppPermissionType == allowedPermissionType);
             return existing;
         }
-            
+
         public TAppPermission FindPermission(string appCode, string subjectName, int permissionTypeId)
         {
             var app = GetApp(appCode);
@@ -160,7 +160,7 @@ namespace Dazinator.Extensions.Permissions
         public IEnumerable<string> GetAppCodes()
         {
             var appSet = _dbContext.Set<TApp>();
-            return appSet                  
+            return appSet
                .Select(a => a.Code).ToArray();
         }
 
@@ -176,11 +176,11 @@ namespace Dazinator.Extensions.Permissions
 
         public virtual TApp GetOrCreateApp(string appCode)
         {
-            
+
             var appSet = _dbContext.Set<TApp>();
 
             var existingLocal = appSet.Local.FirstOrDefault((a) => a.Code == appCode);
-            if(existingLocal != null)
+            if (existingLocal != null)
             {
                 return existingLocal;
             }
@@ -210,7 +210,7 @@ namespace Dazinator.Extensions.Permissions
 
             var existing = appSet
                     .Include(b => b.Permissions)
-                    .Include(a => a.Subjects)                    
+                    .Include(a => a.Subjects)
                       .ThenInclude((a) => a.Permissions)
                     .FirstOrDefault((a) => a.Code == appCode);
 
@@ -228,6 +228,6 @@ namespace Dazinator.Extensions.Permissions
         {
             await _dbContext.SaveChangesAsync();
         }
-    
+
     }
 }

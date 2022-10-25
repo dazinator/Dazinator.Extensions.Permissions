@@ -6,7 +6,7 @@ namespace Dazinator.Extensions.Permissions.Entities
     /// Represents the link between a role and a permission.
     /// </summary>
     /// <typeparam name="TKey">The type of the primary key used for roles.</typeparam>
-    public abstract class RolePermission<TKey, TAppPermission, TAppPermissionType>: IRolePermission<TKey, TAppPermission, TAppPermissionType>
+    public abstract class RolePermission<TKey, TAppPermission, TAppPermissionType> : IRolePermission<TKey, TAppPermission, TAppPermissionType>
         where TKey : IEquatable<TKey>
         where TAppPermissionType : IAppPermissionType
         where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()

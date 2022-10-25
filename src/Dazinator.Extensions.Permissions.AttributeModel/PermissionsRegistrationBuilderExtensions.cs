@@ -52,6 +52,6 @@ where TApp : class, IApp<TAppPermissionSubject, TAppPermission, TAppPermissionTy
                 a.AppPermissionTypes.Add(permType);
             });
             return builder;
-        }   
+        }
     }
 }

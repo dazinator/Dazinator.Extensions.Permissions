@@ -14,7 +14,7 @@ namespace Dazinator.Extensions.Permissions
       where TRolePermission : class, IRolePermission<TRoleIdKey, TAppPermission, TAppPermissionType>, new()
       where TAppPermissionType : IAppPermissionType
       where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()
-    {        
+    {
         /// <summary>
         /// Creates a new instance of the store.
         /// </summary>
@@ -50,7 +50,7 @@ namespace Dazinator.Extensions.Permissions
             cancellationToken.ThrowIfCancellationRequested();
 
             var query = from userPermission in RolePermissions
-                        join permission in AppPermissions.Include(a=>a.Parent) on userPermission.PermissionId equals permission.Id
+                        join permission in AppPermissions.Include(a => a.Parent) on userPermission.PermissionId equals permission.Id
                         where userPermission.RoleId.Equals(roleId)
                         select permission;
 
@@ -74,7 +74,7 @@ namespace Dazinator.Extensions.Permissions
             }
             RolePermissions.Remove(CreateRolePermission(roleId, permission));
         }
-        
+
         protected virtual TRolePermission CreateRolePermission(TRoleIdKey roleId, TAppPermission permission)
         {
             var perm = new TRolePermission() { RoleId = roleId, Permission = permission };
@@ -83,13 +83,13 @@ namespace Dazinator.Extensions.Permissions
 
         public Task<bool> HasPermissionAsync(TRoleIdKey roleId, int permissionId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return RolePermissions.AnyAsync(a => a.RoleId.Equals(roleId) && a.PermissionId == permissionId);  
+            return RolePermissions.AnyAsync(a => a.RoleId.Equals(roleId) && a.PermissionId == permissionId);
         }
-        
+
         public Task SaveChangesAsync()
         {
             return Context.SaveChangesAsync();
-        }       
+        }
     }
 
 }

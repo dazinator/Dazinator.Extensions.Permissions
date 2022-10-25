@@ -52,8 +52,8 @@ namespace Dazinator.Extensions.Permissions
         }
 
         public PermissionsRegistrationBuilder<TAppPermission, TAppPermissionType, TAppPermissionSubject, TApp> AddUserPermissions<TUserIdKey, TUserPermission>(Action<UserPermissionsRegistrationBuilder<TUserIdKey, TUserPermission, TAppPermission, TAppPermissionType>> configure)
-            where TUserIdKey:IEquatable<TUserIdKey>
-            where TUserPermission: IUserPermission<TUserIdKey, TAppPermission, TAppPermissionType>
+            where TUserIdKey : IEquatable<TUserIdKey>
+            where TUserPermission : IUserPermission<TUserIdKey, TAppPermission, TAppPermissionType>
         {
             var builder = new UserPermissionsRegistrationBuilder<TUserIdKey, TUserPermission, TAppPermission, TAppPermissionType>(Services);
             configure(builder);

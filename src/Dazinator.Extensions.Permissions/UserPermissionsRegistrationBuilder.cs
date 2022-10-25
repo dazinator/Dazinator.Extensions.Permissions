@@ -28,13 +28,13 @@ namespace Dazinator.Extensions.Permissions
         }
 
         public UserPermissionsRegistrationBuilder<TUserKey, TUserPermission, TAppPermission, TAppPermissionType> AddUserPermissionStore<TUserPermissionStore>()
-        where TUserPermissionStore : class, IUserPermissionStore<TUserKey, TUserPermission,  TAppPermission, TAppPermissionType>
+        where TUserPermissionStore : class, IUserPermissionStore<TUserKey, TUserPermission, TAppPermission, TAppPermissionType>
         {
             Services.AddScoped<IUserPermissionStore<TUserKey, TUserPermission, TAppPermission, TAppPermissionType>, TUserPermissionStore>();
             return this;
         }
 
-      
+
         public UserPermissionsRegistrationBuilder<TUserKey, TUserPermission, TAppPermission, TAppPermissionType> AddUserPermissionsStore<TUserPermissionStore, TDerivedInterface>()
             where TUserPermissionStore : class, TDerivedInterface
             where TDerivedInterface : class, IUserPermissionStore<TUserKey, TUserPermission, TAppPermission, TAppPermissionType>

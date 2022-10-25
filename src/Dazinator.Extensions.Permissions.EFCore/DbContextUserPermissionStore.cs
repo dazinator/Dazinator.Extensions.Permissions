@@ -14,7 +14,7 @@ namespace Dazinator.Extensions.Permissions
       where TUserPermission : class, IUserPermission<TUserIdKey, TAppPermission, TAppPermissionType>, new()
       where TAppPermissionType : IAppPermissionType
       where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()
-    {        
+    {
         /// <summary>
         /// Creates a new instance of the store.
         /// </summary>
@@ -37,7 +37,7 @@ namespace Dazinator.Extensions.Permissions
         private DbSet<TUserPermission> UserPermissions { get { return Context.Set<TUserPermission>(); } }
 
         private DbSet<TAppPermission> AppPermissions { get { return Context.Set<TAppPermission>(); } }
-                     
+
 
         /// <summary>
         /// Retrieves the permissions for the user with the specified <paramref name="userId"/>.
@@ -50,7 +50,7 @@ namespace Dazinator.Extensions.Permissions
             cancellationToken.ThrowIfCancellationRequested();
 
             var query = from userPermission in UserPermissions
-                        join permission in AppPermissions.Include(a=>a.Parent) on userPermission.PermissionId equals permission.Id
+                        join permission in AppPermissions.Include(a => a.Parent) on userPermission.PermissionId equals permission.Id
                         where userPermission.UserId.Equals(userId)
                         select permission;
 
@@ -74,7 +74,7 @@ namespace Dazinator.Extensions.Permissions
             }
             UserPermissions.Remove(CreateUserPermission(userId, permission));
         }
-        
+
         protected virtual TUserPermission CreateUserPermission(TUserIdKey userId, TAppPermission permission)
         {
             var perm = new TUserPermission() { UserId = userId, Permission = permission };
@@ -83,7 +83,7 @@ namespace Dazinator.Extensions.Permissions
 
         public Task<bool> HasPermissionAsync(TUserIdKey userId, int permissionId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return UserPermissions.AnyAsync(a => a.UserId.Equals(userId) && a.PermissionId == permissionId);  
+            return UserPermissions.AnyAsync(a => a.UserId.Equals(userId) && a.PermissionId == permissionId);
         }
 
         ///// <summary>
@@ -103,7 +103,7 @@ namespace Dazinator.Extensions.Permissions
         public Task SaveChangesAsync()
         {
             return Context.SaveChangesAsync();
-        }       
+        }
     }
 
 }

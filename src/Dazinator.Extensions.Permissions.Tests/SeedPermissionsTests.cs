@@ -28,7 +28,7 @@ namespace Dazinator.Extensions.Permissions.Tests
                  .AddDbContextDefaultPermissionStore<TestDbContext>()
                  .AddAttributeModelSeeder()
                  .SeedPermissionsFromType(typeof(SystemPermissions))
-                 .SeedPermissionsFromType(typeof(AddOnPermissions));                
+                 .SeedPermissionsFromType(typeof(AddOnPermissions));
             });
 
             var sp = services.BuildServiceProvider();
@@ -67,7 +67,7 @@ namespace Dazinator.Extensions.Permissions.Tests
 
                 // edit depends on view
 
-              //  var editPerm = perms.Skip(1).Take(1).First();
+                //  var editPerm = perms.Skip(1).Take(1).First();
 
                 Assert.NotNull(perm.ParentId);
 
@@ -99,7 +99,7 @@ namespace Dazinator.Extensions.Permissions.Tests
                 builder
                  .AddDbContextDefaultPermissionStore<TestDbContext>()
                  .AddAttributeModelSeeder()
-                 .SeedPermissionsFromType(typeof(ComplexPermissions));               
+                 .SeedPermissionsFromType(typeof(ComplexPermissions));
             });
 
             var sp = services.BuildServiceProvider();

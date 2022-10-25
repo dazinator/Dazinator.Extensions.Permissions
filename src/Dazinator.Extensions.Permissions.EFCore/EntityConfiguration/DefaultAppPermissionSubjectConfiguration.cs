@@ -2,7 +2,7 @@
 
 namespace Dazinator.Extensions.Permissions.EFCore.EntityConfiguration
 {
-    public class DefaultAppPermissionSubjectConfiguration : AppPermissionSubjectConfiguration<DefaultAppPermissionSubject, DefaultAppPermissionType,DefaultAppPermission>
+    public class DefaultAppPermissionSubjectConfiguration : AppPermissionSubjectConfiguration<DefaultAppPermissionSubject, DefaultAppPermissionType, DefaultAppPermission>
     {
     }
 }

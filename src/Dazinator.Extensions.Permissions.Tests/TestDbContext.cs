@@ -9,7 +9,7 @@ namespace Dazinator.Extensions.Permissions.Tests
 
     public class TestDbContext : DbContext
     {
-        
+
         public DbSet<User> Users { get; set; }
 
         public DbSet<Role> Roles { get; set; }

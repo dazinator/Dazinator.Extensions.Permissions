@@ -10,7 +10,7 @@ namespace Dazinator.Extensions.Permissions
           where TAppPermissionSubject : IAppPermissionSubject<TAppPermission, TAppPermissionType>
           where TApp : IApp<TAppPermissionSubject, TAppPermission, TAppPermissionType>
     {
-        IEnumerable<string> GetAppCodes();        
+        IEnumerable<string> GetAppCodes();
         TApp GetOrCreateApp(string appCode);
 
         TApp GetApp(string appCode);

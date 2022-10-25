@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dazinator.Extensions.Permissions.Entities
 {
-   // [Table("AppPermissionSubject")]
+    // [Table("AppPermissionSubject")]
     public abstract class AppPermissionSubject<TAppPermission, TAppPermissionType> : IAppPermissionSubject<TAppPermission, TAppPermissionType>
         where TAppPermission : class, IAppPermission<TAppPermission, TAppPermissionType>, new()
         where TAppPermissionType : IAppPermissionType

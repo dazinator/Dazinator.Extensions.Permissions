@@ -13,7 +13,7 @@ namespace Dazinator.Extensions.Permissions.EFCore.EntityConfiguration
             builder.HasIndex(o => new { o.AppId, o.AppPermissionSubjectId, o.AppPermissionTypeId }).IsUnique();
 
             builder.HasMany(e => e.Children)
-                   .WithOne(e => e.Parent) 
+                   .WithOne(e => e.Parent)
                    .HasForeignKey(e => e.ParentId);
 
         }

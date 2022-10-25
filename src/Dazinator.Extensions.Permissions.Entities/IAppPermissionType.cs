@@ -6,6 +6,6 @@ namespace Dazinator.Extensions.Permissions.Entities
     {
         int Id { get; set; }
         string Name { get; set; }
-      //  HashSet<TAppPermission> Permissions { get; set; }
+        //  HashSet<TAppPermission> Permissions { get; set; }
     }
 }

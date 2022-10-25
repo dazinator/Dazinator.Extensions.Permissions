@@ -21,7 +21,7 @@ namespace Dazinator.Extensions.Permissions
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
         /// <returns>A <see cref="Task{TResult}"/> that contains the permissions the user is a member of.</returns>
         Task<IList<TAppPermission>> GetPermissionsAsync(TUserIdKey userId, CancellationToken cancellationToken = default(CancellationToken));
-        
+
         void AddUserPermission(TUserIdKey userId, TAppPermission permission);
 
         //void AddUserPermission(TUserIdKey userId, int permissionId);
@@ -32,7 +32,7 @@ namespace Dazinator.Extensions.Permissions
         /// Returns a flag indicating if the specified user has a permission assigned to them.
         /// </summary>
         Task<bool> HasPermissionAsync(TUserIdKey userId, int permissionId, CancellationToken cancellationToken = default(CancellationToken));
-        
+
         Task SaveChangesAsync();
     }
 
