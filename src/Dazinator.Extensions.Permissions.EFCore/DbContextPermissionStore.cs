@@ -157,6 +157,13 @@ namespace Dazinator.Extensions.Permissions
         #endregion
 
         #region App
+        public IEnumerable<string> GetAppCodes()
+        {
+            var appSet = _dbContext.Set<TApp>();
+            return appSet                  
+               .Select(a => a.Code).ToArray();
+        }
+
         public TApp GetApp(int id)
         {
             var appSet = _dbContext.Set<TApp>();

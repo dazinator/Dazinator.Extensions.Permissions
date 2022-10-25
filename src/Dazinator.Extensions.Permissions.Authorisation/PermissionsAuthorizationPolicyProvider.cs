@@ -26,7 +26,6 @@ namespace Dazinator.Extensions.Permissions
             return _innerProvider?.GetDefaultPolicyAsync();
         }
 
-#if NETSTANDARD2_1
         public Task<AuthorizationPolicy> GetFallbackPolicyAsync()
         {
             if (_innerProvider == null)
@@ -35,7 +34,7 @@ namespace Dazinator.Extensions.Permissions
             }
             return _innerProvider?.GetFallbackPolicyAsync();
         }
-#endif
+
 
         public Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
         {

@@ -17,8 +17,13 @@ variables:
   GitVersion.SemVer: ''
 
 steps:
-- task: gittools.gitversion.gitversion-task.GitVersion@5
-  displayName: gitversion
+- task: gitversion/setup@0
+  displayName: 'setup gitversion'
+  inputs:
+    versionSpec: '5.x'
+
+- task: gitversion/execute@0
+  displayName: 'execute gitversion'
 
 - task: UseDotNet@2
   displayName: 'Use .NET Core sdk'
@@ -29,7 +34,7 @@ steps:
 
 - task: NuGetToolInstaller@1
   inputs:
-    versionSpec: '5.1.0' 
+    versionSpec: '5.8.0' 
 
 - task: DotNetCoreCLI@2
   displayName: Restore
